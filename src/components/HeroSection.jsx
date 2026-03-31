@@ -1,142 +1,193 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import {burgers} from "../data";
-import ArrowDirection from "./ArrowDirection";
-
-// Animation settings
-const ease = "elastic.out(1,0.85)";
-const duration = 1.5;
-const intervalTime = 5000; // 5 seconds
 
 function HeroSection() {
+  const pandaRef = useRef(null);
+  const titleRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const lampRef = useRef(null);
+
   useEffect(() => {
-    // Select DOM elements
-    const arrowLeft = document.querySelector(".arrow-left");
-    const arrowRight = document.querySelector(".arrow-right");
-    const titles = document.querySelectorAll(".title");
-    const names = document.querySelectorAll(".name");
-    const images = document.querySelectorAll(".image");
+    const tl = gsap.timeline({ defaults: { ease: "elastic.out(1, 0.8)" } });
 
-    let current = 0; // Current slide index
-    let intervalId;
+    // Animate title
+    tl.fromTo(
+      titleRef.current,
+      { y: -80, opacity: 0, scale: 0.6 },
+      { y: 0, opacity: 1, scale: 1, duration: 1.4 }
+    )
+      .fromTo(
+        subtitleRef.current,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.0 },
+        "-=0.8"
+      )
+      .fromTo(
+        pandaRef.current,
+        { x: 120, opacity: 0, scale: 0.5 },
+        { x: 0, opacity: 1, scale: 1, duration: 1.2 },
+        "-=1.0"
+      )
+      .fromTo(
+        lampRef.current,
+        { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.8 },
+        "-=0.5"
+      );
 
-    // Update the visibility and position of elements based on the current slide
-    const update = () => {
-      titles.forEach((title, index) => {
-        gsap.to(title, {
-          duration: duration,
-          ease: ease,
-          opacity: index === current ? 1 : 0,
-          y: index === current ? 0 : "-200%",
-        });
-      });
-
-      names.forEach((name, index) => {
-        gsap.to(name, {
-          duration: duration,
-          ease: ease,
-          opacity: index === current ? 1 : 0,
-        });
-      });
-
-      images.forEach((image, index) => {
-        gsap.to(image, {
-          duration: duration,
-          ease: ease,
-          y: index === current ? 0 : "200%",
-          scale: index === current ? 1 : 0.5,
-        });
-      });
-    };
-
-    // Start automatic slide transition
-    const startAutoSlide = () => {
-      intervalId = setInterval(() => {
-        current = (current + 1) % titles.length;
-        update();
-      }, intervalTime);
-    };
-
-    // Stop automatic slide transition
-    const stopAutoSlide = () => {
-      clearInterval(intervalId);
-    };
-
-    // Event listeners for arrow buttons
-    arrowLeft.addEventListener("click", () => {
-      stopAutoSlide();
-      current = (current - 1 + titles.length) % titles.length;
-      update();
-      startAutoSlide();
+    // Panda bounce loop
+    gsap.to(pandaRef.current, {
+      y: -16,
+      duration: 2.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut",
+      delay: 1.8,
     });
 
-    arrowRight.addEventListener("click", () => {
-      stopAutoSlide();
-      current = (current + 1) % titles.length;
-      update();
-      startAutoSlide();
+    // Lamp sparkle
+    gsap.to(lampRef.current, {
+      rotate: 8,
+      duration: 2,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut",
     });
-
-    // Initial update and start auto slide
-    update();
-    startAutoSlide();
-
-    // Cleanup event listeners on component unmount
-    return () => {
-      stopAutoSlide();
-      arrowLeft.removeEventListener("click", () => {});
-      arrowRight.removeEventListener("click", () => {});
-    };
   }, []);
 
   return (
-    <div className="hero-section">
-      <div className="relative w-full overflow-hidden">
-        <div className="container sm:hidden absolute inset-x-0 top-16 flex justify-end">
-          <div className="flex flex-col text-nowrap w-max px-8 py-2">
-            <small className="text-amber-600 font-semibold">Call and Order</small>
-            <a href="tel:+243893666998" className="font-extrabold text-xl">
-              +243 893 666 998
-            </a>
+    <div
+      id="slide-1"
+      className="slide-wrapper relative"
+      style={{
+        background:
+          "radial-gradient(ellipse at 30% 50%, #1a0a6e 0%, #0d0030 50%, #000820 100%)",
+        minHeight: "100vh",
+      }}
+    >
+      {/* Stars layer */}
+      <div className="stars-layer" />
+
+      {/* Floating emojis */}
+      {["⭐", "🌟", "✨", "🎓", "📚", "🎮", "🌈", "🪄"].map((emoji, i) => (
+        <span
+          key={i}
+          className="float-deco"
+          style={{
+            left: `${10 + i * 12}%`,
+            top: `${20 + (i % 3) * 20}%`,
+            fontSize: `${1.5 + (i % 3) * 0.5}rem`,
+            opacity: 0.12 + (i % 3) * 0.05,
+            animationDelay: `${i * 1.2}s`,
+            animationDuration: `${7 + i}s`,
+          }}
+        >
+          {emoji}
+        </span>
+      ))}
+
+      {/* Content */}
+      <div className="container relative z-10 flex flex-col lg:flex-row items-center justify-center min-h-screen gap-8 py-28">
+        {/* Left: Text */}
+        <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
+          {/* Slide Badge */}
+          <div className="mb-6 flex items-center gap-3">
+            <div className="slide-badge">01</div>
+            <span
+              className="font-cartoon text-yellow-400 text-lg tracking-widest"
+              style={{ textShadow: "1px 1px 0 #00008b" }}
+            >
+              TITLE SLIDE
+            </span>
+          </div>
+
+          {/* Main Title */}
+          <h1
+            ref={titleRef}
+            className="cartoon-title title-slide-glow text-6xl md:text-8xl lg:text-9xl mb-4 text-yellow-400"
+          >
+            GENIE-US
+          </h1>
+
+          {/* Lamp icon */}
+          <div ref={lampRef} className="mb-6 text-5xl">
+            🪄
+          </div>
+
+          {/* Subtitle */}
+          <div ref={subtitleRef}>
+            <h2
+              className="font-bubble text-xl md:text-2xl lg:text-3xl text-cyan-300 mb-6"
+              style={{ textShadow: "1px 1px 0 rgba(0,0,0,0.5)" }}
+            >
+              Transforming Early Childhood Learning Through Play
+            </h2>
+
+            <p className="font-body text-white/70 text-base mb-8">
+              A Board Presentation · {new Date().getFullYear()}
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+              <a
+                href="#slide-2"
+                id="explore-btn"
+                className="font-cartoon px-8 py-3 rounded-full text-black text-lg"
+                style={{
+                  background: "linear-gradient(135deg, #FFD700, #FF6D00)",
+                  boxShadow: "0 6px 24px rgba(255,165,0,0.5)",
+                }}
+              >
+                🚀 Explore Presentation
+              </a>
+              <a
+                href="#slide-18"
+                id="partner-btn"
+                className="font-cartoon px-8 py-3 rounded-full text-white text-lg border-2 border-cyan-400/50 hover:bg-cyan-400/10 transition-all"
+              >
+                🤝 Partner With Us
+              </a>
+            </div>
           </div>
         </div>
-        <div className="relative w-full h-screen flex items-center justify-center p-4 main">
-          <div className="flex flex-col items-center">
-            {burgers.map(({ name }, index) => (
-              <h1
-                key={index}
-                className={`opacity-0 text-nowrap absolute left-1/2 -translate-x-1/2 top-1/4 text-[18rem] leading-[1] uppercase title`}
-              >
-                {name}
-              </h1>
-            ))}
-          </div>
-          <div>
-            {burgers.map(({ src, name }, index) => (
-              <img
-                key={index}
-                src={src}
-                alt={name}
-                className={`scale-50 translate-y-full absolute top-[30%] md:top-0 md:pt-12 left-[48%] -translate-x-1/2 flex items-center justify-center w-[800px] object-cover image ${
-                  index === 0 ? "w-[650px]" : ""
-                }`}
-              />
-            ))}
-          </div>
-          <div className="w-full flex justify-center items-center z-10">
-            {burgers.map(({ name }, index) => (
-              <p
-                key={index}
-                className={`p font-extrabold text-amber-900 md:text-white text-xl sm:text-2xl md:text-4xl lg:text-6xl tracking-[1rem] uppercase w-full absolute bottom-48 left-1/2 -translate-x-1/2 text-center name ${
-                  index !== 0 ? "opacity-0" : ""
-                }`}
-              >
-                {name}
+
+        {/* Right: Professor Panda + Video Placeholder */}
+        <div className="flex-1 flex flex-col items-center gap-6 relative">
+          {/* Professor Panda */}
+          <div ref={pandaRef} className="relative">
+            <img
+              src="/professor-panda.png"
+              alt="Professor Panda — GENIE-US Mascot"
+              className="w-64 md:w-80 lg:w-96 object-contain drop-shadow-2xl"
+              style={{ filter: "drop-shadow(0 0 40px rgba(255,215,0,0.4))" }}
+            />
+            {/* Speech bubble */}
+            <div
+              className="speech-bubble absolute -top-12 -left-4 md:-left-16 max-w-[180px]"
+            >
+              <p className="font-cartoon text-yellow-300 text-sm text-center">
+                Welcome! Let's learn together! 🎓
               </p>
-            ))}
+            </div>
+          </div>
+
+          {/* Video Placeholder */}
+          <div className="media-placeholder w-full max-w-sm" style={{ minHeight: "180px" }}>
+            <div className="video-placeholder-icon">▶️</div>
+            <p className="font-cartoon text-yellow-400 text-base text-center">
+              🎬 Video Goes Here
+            </p>
+            <p className="text-white/40 text-xs text-center font-body px-4">
+              Drop your intro video here
+            </p>
           </div>
         </div>
-        <ArrowDirection />
+      </div>
+
+      {/* Bottom scroll hint */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 animate-bounce">
+        <span className="text-white/50 text-xs font-cartoon tracking-widest">SCROLL DOWN</span>
+        <span className="text-yellow-400 text-xl">↓</span>
       </div>
     </div>
   );
