@@ -4,14 +4,22 @@ import { motion } from "framer-motion";
 /* ──────────────── helpers & sub-components ──────────────── */
 
 const subjectConfig = {
-    English: { color: "#FF6B8A", bg: "rgba(255,107,138,0.15)", icon: "📖", border: "#FF6B8A" },
-    Maths: { color: "#FFD700", bg: "rgba(255,215,0,0.15)", icon: "🔢", border: "#FFD700" },
-    Science: { color: "#00E676", bg: "rgba(0,230,118,0.15)", icon: "🔬", border: "#00E676" },
-    Coding: { color: "#00E5FF", bg: "rgba(0,229,255,0.15)", icon: "💻", border: "#00E5FF" },
-    Music: { color: "#E040FB", bg: "rgba(224,64,251,0.15)", icon: "🎵", border: "#E040FB" },
+    English: { color: "#EC4899", bg: "rgba(236,72,153,0.1)", icon: "📖", border: "#EC4899" },
+    Maths: { color: "#EAB308", bg: "rgba(234,179,8,0.1)", icon: "🔢", border: "#EAB308" },
+    Science: { color: "#22C55E", bg: "rgba(34,197,94,0.1)", icon: "🔬", border: "#22C55E" },
+    Coding: { color: "#F97316", bg: "rgba(249,115,22,0.1)", icon: "💻", border: "#F97316" },
+    Music: { color: "#A855F7", bg: "rgba(168,85,247,0.1)", icon: "🎵", border: "#A855F7" },
 };
 
-const accentPool = ["#FFD700", "#00E5FF", "#FF6B8A", "#00E676", "#E040FB", "#FF9800", "#29B6F6", "#AED581"];
+const accentPool = ["#F97316", "#3B82F6", "#EAB308", "#22C55E", "#A855F7", "#EC4899"];
+
+const bgGradients = [
+    "linear-gradient(to bottom, #E0E7FF, #C7D2FE, #ffffff)", // Indigo
+    "linear-gradient(to bottom, #ffffff, #E0F2FE, #ffffff)", // Sky
+    "linear-gradient(to bottom, #FFF8E7, #ffffff)",          // Yellow
+    "linear-gradient(to bottom, #ffffff, #FEF3C7, #fde68a50)", // Amber
+    "linear-gradient(to bottom, #f5f3ff, #ede9fe, #ffffff)",   // Purple
+];
 
 // Stagger wrapper
 const staggerContainer = {
@@ -50,15 +58,9 @@ function YouTubeEmbed({ videoId, compact = false }) {
         <div
             className="youtube-embed-wrap"
             style={{
-                borderRadius: 18,
-                overflow: "hidden",
-                border: "3px solid rgba(255,215,0,0.4)",
-                boxShadow: "0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,215,0,0.15)",
                 aspectRatio: "16/9",
                 width: "100%",
                 maxHeight: compact ? 220 : 320,
-                background: "#000",
-                animation: "rainbow-border 4.5s linear infinite",
             }}
         >
             <iframe
@@ -77,11 +79,13 @@ function YouTubeEmbed({ videoId, compact = false }) {
 function MediaPlaceholder({ type, label, compact = false }) {
     return (
         <div className={`media-placeholder ${compact ? "media-placeholder--compact" : ""}`}>
-            <div className="video-placeholder-icon">{type === "video" ? "▶️" : "🖼️"}</div>
-            <p className="font-cartoon text-yellow-400 text-sm text-center">
+            <div className="video-placeholder-icon" style={{ borderColor: 'var(--panda-orange)' }}>
+                {type === "video" ? "▶️" : "🖼️"}
+            </div>
+            <p className="font-cartoon text-sm text-center" style={{ color: 'var(--panda-orange)' }}>
                 {type === "video" ? "🎬 Video Goes Here" : "🖼️ Image Goes Here"}
             </p>
-            {label && <p className="text-white/35 text-xs text-center font-body px-3">{label}</p>}
+            {label && <p className="text-xs text-center font-body px-3 text-slate-400">{label}</p>}
         </div>
     );
 }
@@ -92,11 +96,11 @@ function BulletPoint({ text, index, accentColor }) {
         <motion.div className="point-item" variants={fadeUp}>
             <div
                 className="point-bullet"
-                style={{ background: accentColor }}
+                style={{ background: `linear-gradient(135deg, ${accentColor}, ${accentColor}dd)` }}
             >
-                <span className="text-black text-xs font-bold">{index + 1}</span>
+                <span className="text-white text-xs font-bold">{index + 1}</span>
             </div>
-            <p className="font-body text-white/85 text-sm md:text-base leading-relaxed">{text}</p>
+            <p className="font-body text-slate-700 text-sm md:text-base leading-relaxed">{text}</p>
         </motion.div>
     );
 }
@@ -111,16 +115,19 @@ function TitleSlide({ slide }) {
         <div
             className="slide-full"
             style={{
-                background:
-                    "radial-gradient(ellipse at 30% 50%, #1a0a6e 0%, #0d0030 55%, #000820 100%)",
+                background: bgGradients[0],
             }}
         >
-            <div className="stars-layer" />
-            {["⭐", "🌟", "✨", "🎓", "📚", "🎮", "🌈", "🪄"].map((e, i) => (
+            <div className="blob-layer">
+                <div style={{ position: 'absolute', top: '10%', left: '10%', width: '150px', height: '150px', background: 'rgba(249,115,22,0.1)', filter: 'blur(30px)', borderRadius: '50%' }} />
+                <div style={{ position: 'absolute', bottom: '10%', right: '10%', width: '250px', height: '250px', background: 'rgba(59,130,246,0.1)', filter: 'blur(30px)', borderRadius: '50%' }} />
+            </div>
+            {/* Soft floating emojis (reduced from dark mode stars) */}
+            {["⭐", "📚", "🪄", "🎓", "🎮"].map((e, i) => (
                 <span key={i} className="float-deco"
                     style={{
-                        left: `${8 + i * 12}%`, top: `${18 + (i % 3) * 20}%`,
-                        animationDelay: `${i * 1.2}s`, animationDuration: `${7 + i}s`
+                        left: `${15 + i * 18}%`, top: `${20 + (i % 2) * 30}%`,
+                        animationDelay: `${i * 1.5}s`, animationDuration: `${6 + i}s`
                     }}>
                     {e}
                 </span>
@@ -134,13 +141,13 @@ function TitleSlide({ slide }) {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                 >
-                    <div className="slide-badge-row">
+                    <div className="slide-badge-row mb-6">
                         <div className="slide-badge">01</div>
-                        <span className="font-cartoon text-yellow-400 tracking-widest text-sm">TITLE SLIDE</span>
+                        <span className="font-cartoon text-sm" style={{ color: 'var(--panda-blue)' }}>PRESENTATION START</span>
                     </div>
 
                     <motion.h1
-                        className="cartoon-title title-slide-glow text-hero"
+                        className="cartoon-title title-gradient text-hero"
                         initial={{ scale: 0.7, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ delay: 0.2, duration: 0.7, ease: "backOut" }}
@@ -155,7 +162,7 @@ function TitleSlide({ slide }) {
                     >🪄</motion.div>
 
                     <motion.h2
-                        className="font-bubble text-cyan-300 text-xl md:text-2xl lg:text-3xl mb-4"
+                        className="font-bubble text-slate-600 text-xl md:text-2xl lg:text-3xl mb-4"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
@@ -163,7 +170,7 @@ function TitleSlide({ slide }) {
                         Transforming Early Childhood Learning Through Play
                     </motion.h2>
 
-                    <p className="font-body text-white/60 text-sm mb-6">Board Presentation · {new Date().getFullYear()}</p>
+                    <p className="font-body text-slate-400 text-sm mb-6">Board Presentation · {new Date().getFullYear()}</p>
 
                     <div className="flex flex-wrap gap-3">
                         <div className="cta-btn-primary">🚀 Explore Presentation</div>
@@ -178,8 +185,8 @@ function TitleSlide({ slide }) {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
                 >
-                    <div className="speech-bubble mb-4" style={{ maxWidth: 200 }}>
-                        <p className="font-cartoon text-yellow-300 text-sm text-center">
+                    <div className="speech-bubble mb-6" style={{ maxWidth: 220 }}>
+                        <p className="font-cartoon text-sm text-center" style={{ color: 'var(--panda-orange)' }}>
                             {slide.pandaMessage}
                         </p>
                     </div>
@@ -187,7 +194,7 @@ function TitleSlide({ slide }) {
                         src="/professor-panda.png"
                         alt="Professor Panda"
                         className="panda-title-img"
-                        style={{ filter: "drop-shadow(0 0 50px rgba(255,215,0,0.45))" }}
+                        style={{ filter: "drop-shadow(0 15px 30px rgba(0,0,0,0.15))" }}
                         animate={{ y: [0, -18, 0] }}
                         transition={{ duration: 3, repeat: Infinity }}
                     />
@@ -204,16 +211,20 @@ function TitleSlide({ slide }) {
 
 /* ── 2. STANDARD SLIDE (most slides) ── */
 function StandardSlide({ slide, index }) {
-    const accent = slide.accentColor || accentPool[index % accentPool.length];
+    const accent = accentPool[index % accentPool.length];
+    const bgGrad = bgGradients[(index + 1) % bgGradients.length];
 
     return (
         <div
             className="slide-full"
             style={{
-                background: `radial-gradient(ellipse at 20% 30%, ${slide.bgColor || "#0d1a2d"} 0%, #050010 100%)`,
+                background: bgGrad,
             }}
         >
-            <div className="stars-layer" />
+            <div className="blob-layer">
+                <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '300px', height: '300px', background: `${accent}15`, filter: 'blur(50px)', borderRadius: '50%' }} />
+                <div style={{ position: 'absolute', bottom: '0%', right: '0%', width: '200px', height: '200px', background: `rgba(249,115,22,0.1)`, filter: 'blur(40px)', borderRadius: '50%' }} />
+            </div>
             {["⭐", "✨", "🌟"].map((e, i) => (
                 <span key={i} className="float-deco"
                     style={{ left: `${15 + i * 30}%`, top: `${12 + i * 25}%`, animationDelay: `${i * 2}s` }}>
@@ -236,7 +247,6 @@ function StandardSlide({ slide, index }) {
                             className="cartoon-title text-2xl md:text-3xl lg:text-4xl"
                             style={{
                                 color: accent,
-                                textShadow: `2px 2px 0 rgba(0,0,0,0.5), 0 0 26px ${accent}40`,
                             }}
                         >
                             {slide.icon} {slide.title}
@@ -305,7 +315,7 @@ function StandardSlide({ slide, index }) {
                                         style={{ color: accentPool[i % accentPool.length] }}>
                                         {m.phase}
                                     </div>
-                                    <p className="font-body text-white/75 text-xs leading-snug">{m.label}</p>
+                                    <p className="font-body text-slate-600 text-xs leading-snug">{m.label}</p>
                                 </motion.div>
                             ))}
                         </motion.div>
@@ -342,17 +352,20 @@ function StandardSlide({ slide, index }) {
 }
 
 /* ── 3. CTA / CLOSING SLIDE ── */
-function CTASlide({ slide }) {
-    const accent = slide.accentColor || "#FFD700";
+function CTASlide({ slide, index }) {
+    const accent = accentPool[index % accentPool.length] || "var(--panda-orange)";
+    const bgGrad = bgGradients[(index + 1) % bgGradients.length] || bgGradients[0];
 
     return (
         <div
             className="slide-full"
             style={{
-                background: `radial-gradient(ellipse at 50% 40%, ${slide.bgColor} 0%, #050010 100%)`,
+                background: bgGrad,
             }}
         >
-            <div className="stars-layer" />
+            <div className="blob-layer">
+                <div style={{ position: 'absolute', top: '20%', left: '30%', width: '300px', height: '300px', background: `${accent}15`, filter: 'blur(50px)', borderRadius: '50%' }} />
+            </div>
 
             <div className="container slide-inner slide-inner--cta">
                 {/* Panda large left */}
@@ -371,7 +384,7 @@ function CTASlide({ slide }) {
                         src="/professor-panda.png"
                         alt="Professor Panda"
                         className="panda-img-large"
-                        style={{ filter: `drop-shadow(0 0 45px ${accent}55)` }}
+                        style={{ filter: `drop-shadow(0 15px 30px rgba(0,0,0,0.15))` }}
                         animate={{ y: [0, -18, 0], rotate: [0, 3, -3, 0] }}
                         transition={{ duration: 4, repeat: Infinity }}
                     />
@@ -388,7 +401,7 @@ function CTASlide({ slide }) {
                         <div className="slide-badge">{slide.slideNumber}</div>
                         <h2
                             className="cartoon-title text-3xl md:text-4xl"
-                            style={{ color: accent, textShadow: `2px 2px 0 rgba(0,0,0,0.5)` }}
+                            style={{ color: accent }}
                         >
                             {slide.icon} {slide.title}
                         </h2>
@@ -425,8 +438,8 @@ function CTASlide({ slide }) {
 
 /* ──────────────── MAIN ROUTER ──────────────── */
 export default function SlideRenderer({ slide, index, total }) {
-    if (slide.type === "title") return <TitleSlide slide={slide} />;
+    if (slide.type === "title") return <TitleSlide slide={slide} index={index} />;
     if (slide.type === "cta" || slide.type === "closing")
-        return <CTASlide slide={slide} />;
+        return <CTASlide slide={slide} index={index} />;
     return <StandardSlide slide={slide} index={index} />;
 }
