@@ -24,7 +24,7 @@ export const slides = [
       "MAIN OBJECTIVE IS TO MAKE PARENTS AND KIDS KEEP COMING BACK TO THE PLATFORM"
     ],
     pandaMessage: "Learning is an adventure, and I'm your guide! 🐾",
-    image: "/images/slide 2.jpeg",
+    video: "https://youtu.be/kSaewKPBx_k",
     bgColor: "#0d2b45",
     accentColor: "#00E5FF",
   },
@@ -316,7 +316,7 @@ export const slides = [
       }
     ],
     pandaMessage: "Safe browsing, happy panda, smart kids! 🐼",
-    image: "/images/slide 5.jpeg",
+    video: "https://youtu.be/rFqxN1eHb4g",
     bgColor: "#1a1a0a",
     accentColor: "#FFD700",
   },

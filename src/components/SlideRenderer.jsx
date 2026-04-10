@@ -51,7 +51,39 @@ function PandaPanel({ message, accentColor, large = false }) {
 }
 
 /* ─── Media Placeholder ─── */
-function MediaDisplay({ image, label }) {
+function MediaDisplay({ image, video, label }) {
+    if (video) {
+        const getEmbedUrl = (url) => {
+            if (!url) return null;
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            const id = (match && match[2].length === 11) ? match[2] : null;
+            return id ? `https://www.youtube.com/embed/${id}` : null;
+        };
+        const embedUrl = getEmbedUrl(video);
+
+        return (
+            <motion.div
+                className="relative group w-full aspect-video"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+            >
+                <div className="absolute -inset-6 bg-gradient-to-tr from-blue-400 to-purple-300 rounded-[40px] opacity-20 blur-3xl group-hover:opacity-50 transition-opacity" />
+                <div className="relative z-10 w-full h-full rounded-[32px] overflow-hidden shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] border-4 border-white/60 transform group-hover:scale-[1.02] transition-transform duration-500">
+                    <iframe
+                        width="100%"
+                        height="100%"
+                        src={embedUrl}
+                        title={label}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                    ></iframe>
+                </div>
+            </motion.div>
+        );
+    }
     if (image) {
         return (
             <motion.div
@@ -68,7 +100,7 @@ function MediaDisplay({ image, label }) {
     return (
         <div className="liquid-glass border-dashed border-2 flex flex-col items-center justify-center p-12 min-h-[300px]">
             <span className="text-4xl mb-4">🖼️</span>
-            <p className="font-cartoon text-slate-400">Magic Image Needed</p>
+            <p className="font-cartoon text-slate-400">Magic Media Needed</p>
         </div>
     );
 }
@@ -149,8 +181,14 @@ function TitleSlide({ slide }) {
                     animate={{ opacity: 1, scale: 1, rotate: 0 }}
                     transition={{ duration: 1, ease: "backOut" }}
                 >
-                    <div className="relative z-10">
-                        {slide.image && <img src={slide.image} alt="Cover" className="rounded-[40px] shadow-2xl border-[12px] border-white/60 max-w-full" />}
+                    <div className="relative z-10 w-full lg:w-[120%] lg:-ml-[10%]">
+                        {(slide.image || slide.video) && (
+                            <MediaDisplay
+                                image={slide.image}
+                                video={slide.video}
+                                label={slide.title}
+                            />
+                        )}
                         <div className="absolute -bottom-16 -right-16 hidden xl:block">
                             <PandaPanel message={slide.pandaMessage} accentColor="var(--panda-orange)" large />
                         </div>
@@ -263,14 +301,18 @@ function StandardSlide({ slide, index }) {
 
                     {/* Media */}
                     <div className="lg:col-span-4 flex flex-col gap-8 items-center justify-center">
-                        {slide.image ? (
-                            <MediaDisplay image={slide.image} label={slide.title} />
+                        {(slide.image || slide.video) ? (
+                            <MediaDisplay
+                                image={slide.image}
+                                video={slide.video}
+                                label={slide.title}
+                            />
                         ) : (
                             <div className="hidden lg:block w-full">
                                 <PandaPanel message={slide.pandaMessage} accentColor={accent} large />
                             </div>
                         )}
-                        {slide.image && <PandaPanel message={slide.pandaMessage} accentColor={accent} />}
+                        {(slide.image || slide.video) && <PandaPanel message={slide.pandaMessage} accentColor={accent} />}
                     </div>
                 </div>
             </div>
@@ -291,14 +333,18 @@ function CTASlide({ slide, index }) {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                 >
-                    {slide.image ? (
+                    {(slide.image || slide.video) ? (
                         <div className="w-full">
-                            <MediaDisplay image={slide.image} label={slide.title} />
+                            <MediaDisplay
+                                image={slide.image}
+                                video={slide.video}
+                                label={slide.title}
+                            />
                         </div>
                     ) : (
                         <PandaPanel message={slide.pandaMessage} accentColor={accent} large />
                     )}
-                    {slide.image && <PandaPanel message={slide.pandaMessage} accentColor={accent} />}
+                    {(slide.image || slide.video) && <PandaPanel message={slide.pandaMessage} accentColor={accent} />}
                 </motion.div>
 
                 <motion.div
