@@ -134,7 +134,7 @@ export default function App() {
       </div>
 
       {/* Top Bar Logo Only */}
-      <div className="fixed top-6 left-8 z-[100] flex items-center gap-3 liquid-glass px-5 py-3 border-white/40">
+      <div className="fixed top-6 left-8 z-[500] flex items-center gap-3 liquid-glass px-5 py-3 border-white/40">
         <img src="/professor-panda.png" alt="Panda" className="w-10 h-10 object-contain drop-shadow-md" />
         <span className="liquid-text text-xl">GENIE-US</span>
       </div>

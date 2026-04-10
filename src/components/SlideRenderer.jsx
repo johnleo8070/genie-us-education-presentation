@@ -142,46 +142,50 @@ function SectionCard({ section, accentColor }) {
 
 /* ── 1. TITLE SLIDE ── */
 function TitleSlide({ slide }) {
+    const hasText = !!(slide.title || slide.subtitle || slide.tag);
+
     return (
         <div className="slide-full bg-white flex items-center justify-center min-h-screen w-full relative">
             <BackgroundMagic accent="var(--panda-orange)" />
 
-            <div className="container grid lg:grid-cols-2 gap-16 items-center relative z-10 mx-auto px-12">
-                <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <div className="flex items-center gap-3 mb-8">
-                        <div className="w-12 h-12 bg-orange-500 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-6">
-                            <span className="text-white font-cartoon text-xl">01</span>
+            <div className={`container relative z-10 mx-auto px-12 ${hasText ? 'grid lg:grid-cols-2 gap-16 items-center' : 'flex flex-col items-center justify-center'}`}>
+                {hasText && (
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        <div className="flex items-center gap-3 mb-8">
+                            <div className="w-12 h-12 bg-orange-500 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-6">
+                                <span className="text-white font-cartoon text-xl">01</span>
+                            </div>
+                            <span className="font-cartoon text-orange-500 tracking-widest text-sm uppercase">{slide.tag}</span>
                         </div>
-                        <span className="font-cartoon text-orange-500 tracking-widest text-sm uppercase">{slide.tag}</span>
-                    </div>
 
-                    <h1 className="liquid-text text-7xl md:text-8xl lg:text-9xl mb-6 -ml-[60px]">
-                        {slide.title}
-                    </h1>
+                        <h1 className="liquid-text text-7xl md:text-8xl lg:text-9xl mb-6 -ml-[60px]">
+                            {slide.title}
+                        </h1>
 
-                    <h2 className="font-bubble text-3xl md:text-5xl text-slate-600 mb-10 leading-tight -ml-[10px]">
-                        {slide.subtitle}
-                    </h2>
+                        <h2 className="font-bubble text-3xl md:text-5xl text-slate-600 mb-10 leading-tight -ml-[10px]">
+                            {slide.subtitle}
+                        </h2>
 
-                    <div className="flex flex-wrap gap-5">
-                        <button className="liquid-btn primary text-lg">🚀 START ADVENTURE</button>
-                        <button className="liquid-btn text-orange-500 hover:text-orange-600">
-                            WATCH DEMO
-                        </button>
-                    </div>
-                </motion.div>
+                        <div className="flex flex-wrap gap-5">
+                            <button className="liquid-btn primary text-lg">🚀 START ADVENTURE</button>
+                            <button className="liquid-btn text-orange-500 hover:text-orange-600">
+                                WATCH DEMO
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
 
                 <motion.div
-                    className="relative flex justify-center"
+                    className="relative flex justify-center w-full"
                     initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
                     animate={{ opacity: 1, scale: 1, rotate: 0 }}
                     transition={{ duration: 1, ease: "backOut" }}
                 >
-                    <div className="relative z-10 w-full lg:w-[120%] lg:-ml-[10%]">
+                    <div className={`relative z-10 w-full ${hasText ? 'lg:w-[120%] lg:-ml-[10%]' : 'max-w-4xl px-4'}`}>
                         {(slide.image || slide.video) && (
                             <MediaDisplay
                                 image={slide.image}
