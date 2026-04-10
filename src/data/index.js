@@ -3,12 +3,11 @@ export const slides = [
     id: 1,
     type: "title",
     slideNumber: "01",
-    title: "GENIE-US",
+    title: "GENIE-US EDUCATION",
     subtitle: "Transforming Early Childhood Learning Through Play",
-    tag: "Board Presentation",
-    pandaMessage: "Welcome! Let's learn together! 🎓",
-    videoPlaceholder: null,
-    imagePlaceholder: "main-logo",
+    tag: "Presented by GSTAT MOBILE SOLUTIONS",
+    pandaMessage: "Welcome to the future of learning! 🎓",
+    image: "/images/slide 1.jpeg",
     bgColor: "#1a0a4e",
     accentColor: "#FFD700",
   },
@@ -19,14 +18,15 @@ export const slides = [
     title: "Introduction",
     icon: "🐼",
     points: [
-      "GENIE-US is an innovative digital e-learning platform designed specifically for children between the ages of 2 and 7, combining education with entertainment.",
-      "At the heart of GENIE-US is our mascot, Professor Panda, who serves as a friendly guide throughout every learning journey.",
-      "Our clear objective: make early childhood education fun, accessible, and impactful — developing a love for learning at an early stage.",
+      "GENIE-US is an innovative digital e-learning platform designed specifically for children between the ages of 2 and 7.",
+      "Focuses on combining education with entertainment to create an engaging and effective learning environment.",
+      "Uses storytelling, animation, and interactive elements to transform traditional learning into an enjoyable experience.",
+      "Professor Panda serves as a friendly guide, making children feel comfortable, engaged, and motivated.",
+      "Clear objective: make early childhood education fun, accessible, and impactful.",
+      "MAIN OBJECTIVE: MAKE PARENTS AND KIDS KEEP COMING BACK TO THE PLATFORM."
     ],
-    pandaMessage: "Hello little learners! I'm Professor Panda! 🐼",
-    youtubeId: "kSaewKPBx_k",
-    videoPlaceholder: null,
-    imagePlaceholder: null,
+    pandaMessage: "I'm Professor Panda, your guide to magic learning! 🐼",
+    image: "/images/slide 2.jpeg",
     bgColor: "#0d2b45",
     accentColor: "#00E5FF",
   },
@@ -36,14 +36,37 @@ export const slides = [
     slideNumber: "03",
     title: "The Problem",
     icon: "🤔",
-    points: [
-      "Traditional learning methods for young children lack engagement and interactivity, leading to boredom and reduced interest at an early age.",
-      "Many parents struggle to find effective tools that combine both learning and entertainment — most apps fail to strike the right balance.",
-      "A critical lack of tools that allow parents to actively monitor and support their child's learning journey.",
+    sections: [
+      {
+        title: "Traditional Learning Challenges",
+        items: [
+          "Lack of engagement and interactivity.",
+          "Heavy reliance on repetition and passive learning (listening instead of doing).",
+          "One-size-fits-all approach (fast learners get bored, slow learners get left behind).",
+          "Boredom leads to reduced interest in education at an early age.",
+          "Fixed school schedules and limited learning time."
+        ]
+      },
+      {
+        title: "Parental & Infrastructure Gaps",
+        items: [
+          "Parents struggle to find tools balancing fun and structured learning.",
+          "Lack of tools for parents to monitor and support the learning journey.",
+          "Limited access to modern digital tools and outdated teaching methods in many schools.",
+          "Inadequate digital infrastructure and generic eLearning platforms."
+        ]
+      },
+      {
+        title: "Emotional & Skill Gaps",
+        items: [
+          "Fear-based or pressure-filled environments.",
+          "Little focus on real-world skills like coding or technology.",
+          "Weak digital literacy and limited problem-solving development."
+        ]
+      }
     ],
-    pandaMessage: "Don't worry! We have the solution! ✨",
-    videoPlaceholder: null,
-    imagePlaceholder: "problem-visual",
+    pandaMessage: "Boring learning is a thing of the past! We're here to fix it! ✨",
+    image: "/images/slide 3.jpeg",
     bgColor: "#2d0a1e",
     accentColor: "#FF6B8A",
   },
@@ -53,50 +76,86 @@ export const slides = [
     slideNumber: "04",
     title: "Our Solution",
     icon: "💡",
-    points: [
-      "GENIE-US creates a platform where learning is interactive and enjoyable — integrating games, videos, and storytelling to capture children's attention.",
-      "Each lesson is carefully structured to ensure children can grasp key concepts while having fun — making learning irresistible!",
-      "The Parent Dashboard provides real-time insights into a child's progress, keeping parents actively involved in the education journey.",
+    sections: [
+      {
+        title: "Engaging & Interactive Learning",
+        items: [
+          "Transforms passive listening into active participation through videos, games, and storytelling.",
+          "Short 30-second videos led by Professor Panda capture attention.",
+          "Replace passive YouTube watching with engaging, educational content."
+        ]
+      },
+      {
+        title: "Personalization & Accessibility",
+        items: [
+          "Self-paced learning: no child is left behind or held back.",
+          "Accessible anywhere with internet — learning fits into any lifestyle.",
+          "Safe, pressure-free environment builds confidence and curiosity."
+        ]
+      },
+      {
+        title: "Monitoring & Skills",
+        items: [
+          "Real-time Parent Dashboard for tracking performance and progress.",
+          "Early introduction to coding, problem-solving, and digital literacy.",
+          "Instant feedback and rewards motivate continued learning."
+        ]
+      }
     ],
-    pandaMessage: "Learning is more fun with me around! 🌟",
-    videoPlaceholder: null,
-    imagePlaceholder: "solution-visual",
+    pandaMessage: "We make learning feel like play every single day! 🌟",
+    image: "/images/slide 4.jpeg",
     bgColor: "#0a2d1e",
     accentColor: "#00E676",
   },
   {
     id: 5,
-    type: "features",
+    type: "offers",
     slideNumber: "05",
     title: "What GENIE-US Offers",
-    icon: "🎁",
-    subjects: ["English", "Maths", "Science", "Coding", "Music"],
-    points: [
-      "Comprehensive subjects including English, Maths, Science, Coding, and Music — building a strong foundation for early childhood development.",
-      "Content delivered through interactive videos, games, worksheets, and quizzes — catering to all learning styles and preferences.",
-      "Educational content combined with fun activities ensures children remain engaged and develop a positive attitude towards education.",
+    icon: "🌟",
+    content: [
+      {
+        title: "Core Subjects",
+        items: [
+          "English – phonics, reading, and communication",
+          "Maths – counting, numbers, and problem-solving",
+          "Science – exploring the world through fun concepts",
+          "Coding – basic logic and programming through games",
+          "Music – rhythm, sound, and creativity"
+        ]
+      },
+      {
+        title: "Interactive Features",
+        items: [
+          "Interactive Video Lessons (led by Professor Panda)",
+          "Game-Based Learning (solving puzzles and challenges)",
+          "Worksheets & Practice Activities (printable & digital)",
+          "Interactive Classroom Experience (virtual quizzes)",
+          "Rewards & Motivation System (stars, badges, achievements)"
+        ]
+      }
     ],
-    pandaMessage: "So many amazing things to learn! 📚",
-    youtubeId: "rFqxN1eHb4g",
-    videoPlaceholder: null,
-    imagePlaceholder: null,
+    pandaMessage: "So many pathways to explore! Which one first? 📚",
+    image: "/images/slide 5.jpeg",
     bgColor: "#1a1a0a",
     accentColor: "#FFD700",
   },
   {
     id: 6,
-    type: "learning",
+    type: "experience",
     slideNumber: "06",
     title: "Learning Experience",
-    icon: "🎮",
+    icon: "🎓",
     points: [
-      "Short, engaging 30-second interactive video lessons introduce key concepts in a simple and fun way — easy to understand and retain!",
-      "Each lesson is guided by storytelling and characters, creating a sense of adventure that helps children connect emotionally with content.",
-      "Gamified learning modules provide instant feedback and rewards, building confidence and reinforcing positive learning behavior.",
+      "Short & Engaging Video Lessons: 30-second bite-sized intro by Professor Panda.",
+      "Learn Through Play: Interacting via puzzles, questions, and fun challenges.",
+      "Interactive Learning Modules: Click, explore, and respond — stay actively involved.",
+      "Instant Feedback: Learn quickly from mistakes with real-time corrections.",
+      "Gamified Experience: Rewards, stars, and achievements build confidence.",
+      "Storytelling: Lessons guided by characters for meaningful, memorable learning."
     ],
-    pandaMessage: "30 seconds of fun can teach SO much! ⏱️",
-    videoPlaceholder: "learning-video",
-    imagePlaceholder: null,
+    pandaMessage: "Every lesson is a new adventure with me! 🗺️",
+    image: "/images/slide 6.jpeg",
     bgColor: "#0a1a2d",
     accentColor: "#FF9800",
   },
@@ -106,14 +165,34 @@ export const slides = [
     slideNumber: "07",
     title: "Unique Features",
     icon: "⭐",
-    points: [
-      "Panda-themed interface with bright colors, animations, and friendly characters creates a visually appealing environment children love.",
-      "Early coding introduction: simplified coding concepts in fun activities develop problem-solving and logical thinking from a young age.",
-      "Fully interactive classroom experience where children actively participate rather than passively consuming content.",
+    sections: [
+      {
+        title: "Engagement & Branding",
+        items: [
+          "Professor Panda Experience: Friendly character-led guidance.",
+          "Panda-themed interface: Bright colors, animations, and intuitive navigation.",
+          "Gamified Learning System: Earn stars and rewards for consistency."
+        ]
+      },
+      {
+        title: "Advanced Learning",
+        items: [
+          "Early Coding & Digital Skills: Simple logic and problem-solving.",
+          "Click-to-Learn Modules: Hands-on active participation.",
+          "Personalized Learning Journey: Adapts to individual progress."
+        ]
+      },
+      {
+        title: "Enterprise Solutions",
+        items: [
+          "Customized school-branded learning platforms.",
+          "Teacher management dashboard and online exams/grading.",
+          "Homework and assignment management systems."
+        ]
+      }
     ],
-    pandaMessage: "I make every lesson magical! 🎪",
-    videoPlaceholder: null,
-    imagePlaceholder: "features-visual",
+    pandaMessage: "I'm not just a panda, I'm your learning partner! 🎪",
+    image: "/images/slide 7.jpeg",
     bgColor: "#1e0a2d",
     accentColor: "#E040FB",
   },
@@ -124,13 +203,15 @@ export const slides = [
     title: "Parent Dashboard",
     icon: "📊",
     points: [
-      "Full visibility into the child's learning journey — detailed insights including completed lessons, scores, and performance trends.",
-      "Helps parents identify areas needing additional support while celebrating achievements and milestones along the way.",
-      "Easy-to-understand data and analytics creates a strong partnership between the platform and the family.",
+      "Real-Time Progress Tracking: Monitor completed lessons and quiz scores.",
+      "Performance Insights: Identify strengths and areas needing extra support.",
+      "Manage Multiple Children: One account for the whole family with separate paths.",
+      "Activity Monitoring: Track learning time and engagement patterns.",
+      "Personalized Overview: Recommended next steps based on progress.",
+      "Safe & Controlled: Full control over access and usage."
     ],
-    pandaMessage: "Parents are superheroes too! 🦸",
-    videoPlaceholder: null,
-    imagePlaceholder: "dashboard-visual",
+    pandaMessage: "Parents, you're a big part of the team! 🦸",
+    image: "/images/parent dashboard.jpeg",
     bgColor: "#0a2d2d",
     accentColor: "#26C6DA",
   },
@@ -139,15 +220,17 @@ export const slides = [
     type: "student",
     slideNumber: "09",
     title: "Student Experience",
-    icon: "🎒",
+    icon: "🧒",
     points: [
-      "Children explore lessons through games, stories, and videos — making learning feel like an adventure rather than a task.",
-      "Interactive activities like quizzes and puzzles encourage critical thinking and provide instant feedback for improved understanding.",
-      "Reward system motivates children by recognizing achievements, creating a positive cycle of consistent engagement.",
+      "Learn Through Play: Games and puzzles make education feel like a reward.",
+      "Interactive Lessons: Colorful video lessons led by Professor Panda.",
+      "Hands-On Learning: Clicking, answering, and solving challenges.",
+      "Rewards & Achievements: Earn stars and badges to build confidence.",
+      "Kid-Friendly Environment: Simple navigation for independent exploration.",
+      "Interactive Challenges: Reinforce knowledge through fun quizzes."
     ],
-    pandaMessage: "Every quest leads to a new discovery! 🗺️",
-    videoPlaceholder: null,
-    imagePlaceholder: "student-visual",
+    pandaMessage: "Ready to earn your badges? Let's go! 🏅",
+    image: "/images/student dashboard.jpeg",
     bgColor: "#2d1a0a",
     accentColor: "#FF7043",
   },
@@ -158,13 +241,15 @@ export const slides = [
     title: "Business Model",
     icon: "💰",
     points: [
-      "Freemium model: basic features free for all users while premium content is available through subscription plans — accessible yet profitable.",
-      "Paid subscriptions unlock advanced features, additional content, and enhanced learning tools for maximum value.",
-      "Additional revenue through school partnerships and educational content licensing — positioning GENIE-US for long-term scalability.",
+      "Freemium Model: Free trial and basic access to lower entry barriers.",
+      "Subscription Plans: Predictable monthly/yearly revenue for full curriculum.",
+      "School Partnerships: Bulk licensing and classroom integration.",
+      "Content Licensing: Licensing videos and curriculum to other platforms.",
+      "Upselling: Premium features like advanced analytics and special packs (coding, music).",
+      "Scalable Digital Platform: Low operational cost and global reach."
     ],
-    pandaMessage: "Great education AND great business! 💼",
-    videoPlaceholder: null,
-    imagePlaceholder: "business-visual",
+    pandaMessage: "Growing knowledge and growing success! 💼",
+    image: "/images/slide 10.jpeg",
     bgColor: "#0a2d0a",
     accentColor: "#69F0AE",
   },
@@ -175,30 +260,34 @@ export const slides = [
     title: "Market Opportunity",
     icon: "🌍",
     points: [
-      "Rapidly increasing demand for digital learning solutions, particularly in early childhood education — parents seek value AND entertainment.",
-      "Significant gap in Africa and emerging markets for high-quality early learning tools — GENIE-US is perfectly positioned to fill this gap.",
-      "The global EdTech industry continues to expand, creating massive opportunities for platforms like GENIE-US to scale worldwide.",
+      "EdTech Explosion: Rapid shift toward digital learning and internet access.",
+      "Underserved Segment: High demand for quality education for ages 2–7.",
+      "Global Potential: Reach users globally without physical infrastructure limits.",
+      "Parental Investment: Increasing willingness to pay for measurable results.",
+      "Mobile Learning: Rise of smartphone/tablet usage among children.",
+      "Future Skill Gap: Growing demand for early coding and problem-solving."
     ],
-    pandaMessage: "The whole world needs GENIE-US! 🌏",
-    videoPlaceholder: null,
-    imagePlaceholder: "market-visual",
+    pandaMessage: "The whole world is our classroom! 🌏",
+    image: "/images/slide 11.jpeg",
     bgColor: "#0a0a2d",
     accentColor: "#5C6BC0",
   },
   {
     id: 12,
-    type: "competitive",
+    type: "advantage",
     slideNumber: "12",
     title: "Competitive Advantage",
     icon: "🏆",
     points: [
-      "Focused exclusively on children aged 2–7, an underserved segment — highly relevant and effective content for this critical age group.",
-      "Unique combination of learning, gaming, and storytelling creates a value proposition that differentiates GENIE-US from all competitors.",
-      "Strong branding around Professor Panda creates a memorable identity that builds trust and loyalty among users worldwide.",
+      "Niche Focus: Specifically designed for a critical developmental stage (2–7).",
+      "Professor Panda Brand: Memorable mascot builds emotional connection.",
+      "Gamified Interactivity: Active learning vs. passive content consumption.",
+      "Personalized Path: Adapts to each child's individual learning speed.",
+      "Connected Ecosystem: Integration of parent tools with student experience.",
+      "Future Ready: Early introduction to coding and digital literacy."
     ],
-    pandaMessage: "Nobody does it quite like GENIE-US! 🥇",
-    videoPlaceholder: null,
-    imagePlaceholder: "competitive-visual",
+    pandaMessage: "We're in a league of our own! 🥇",
+    image: "/images/slide 12.jpeg",
     bgColor: "#1a0a0a",
     accentColor: "#EF5350",
   },
@@ -207,15 +296,17 @@ export const slides = [
     type: "tech",
     slideNumber: "13",
     title: "Technology Stack",
-    icon: "⚙️",
+    icon: "💻",
     points: [
-      "Built using modern web technologies ensuring scalability, performance, and reliability — designed to handle growing user demand smoothly.",
-      "Secure backend infrastructure supports data management, authentication, and parent-child account linking with full privacy protection.",
-      "Seamless payment system integration allows easy subscription management and secure transactions for premium features.",
+      "Frontend: React / Next.js for a fast, responsive, and visually engaging UI.",
+      "Backend: Scalable server logic handling auth, progress, and content.",
+      "Database: Secure storage for user profiles and learning analytics.",
+      "Security: Role-based access and safe parent-child account linking.",
+      "Payments: Integrated systems (Stripe) for secure subscription management.",
+      "Future: AI personalization, mobile apps, and voice-assisted learning."
     ],
-    pandaMessage: "Powered by the best technology! 🖥️",
-    videoPlaceholder: null,
-    imagePlaceholder: "tech-visual",
+    pandaMessage: "Smart tech makes smart kids! 🖥️",
+    image: "/images/slide 13.jpeg",
     bgColor: "#0a0d1a",
     accentColor: "#42A5F5",
   },
@@ -224,15 +315,17 @@ export const slides = [
     type: "growth",
     slideNumber: "14",
     title: "Growth Strategy",
-    icon: "📈",
+    icon: "🚀",
     points: [
-      "Leveraging social media platforms with engaging videos and interactive posts to build brand awareness among parents and children.",
-      "YouTube as a key distribution channel — educational content drives traffic, establishing GENIE-US as a trusted learning resource.",
-      "Strategic partnerships with schools, influencers, and educational organizations to expand reach and credibility at scale.",
+      "Digital Marketing: Leveraging Social Media (Instagram, TikTok, YouTube).",
+      "Content Marketing: YouTube episodes featuring Professor Panda.",
+      "School Partnerships: Bulk onboarding for institutional adoption.",
+      "Word-of-Mouth: Referral programs and parenting community focus.",
+      "Global Expansion: Localizing content for international markets.",
+      "Mobile App Launch: iOS/Android apps to increase engagement."
     ],
-    pandaMessage: "Together we grow bigger and stronger! 🚀",
-    videoPlaceholder: null,
-    imagePlaceholder: "growth-visual",
+    pandaMessage: "Blast off to new heights! 🚀",
+    image: "/images/slide 14.jpeg",
     bgColor: "#1a2d0a",
     accentColor: "#AED581",
   },
@@ -243,13 +336,15 @@ export const slides = [
     title: "Roadmap",
     icon: "🗺️",
     milestones: [
-      { phase: "Phase 1", label: "Platform Development & Launch", icon: "🏗️" },
-      { phase: "Phase 2", label: "User Acquisition & Marketing", icon: "📣" },
-      { phase: "Phase 3", label: "Mobile App & Global Expansion", icon: "🌎" },
+      { phase: "Phase 1", label: "Platform Development & Core Launch", icon: "🚧" },
+      { phase: "Phase 2", label: "Launch & User Acquisition", icon: "🚀" },
+      { phase: "Phase 3", label: "Growth & UI Optimization", icon: "📈" },
+      { phase: "Phase 4", label: "Mobile App Development", icon: "📱" },
+      { phase: "Phase 5", label: "Global Market Expansion", icon: "🌍" },
+      { phase: "Phase 6", label: "AI & Innovation Integration", icon: "🧠" }
     ],
-    pandaMessage: "Every journey begins with one step! 👣",
-    videoPlaceholder: null,
-    imagePlaceholder: "roadmap-visual",
+    pandaMessage: "The best is yet to come! 🗺️",
+    image: null,
     bgColor: "#0a1a2d",
     accentColor: "#29B6F6",
   },
@@ -258,15 +353,15 @@ export const slides = [
     type: "vision",
     slideNumber: "16",
     title: "Our Vision",
-    icon: "🔭",
+    icon: "🌟",
     points: [
-      "To become a leading global platform for early childhood learning — redefining how children experience education worldwide.",
-      "A future where learning is driven by curiosity and creativity rather than obligation — inspiring children to explore, discover, and grow.",
-      "Continuous innovation to create a lasting impact on the way children learn and develop across the globe.",
+      "To become a global leader in early childhood e-learning.",
+      "A world where every child has access to high-quality interactive tools.",
+      "Redefining education as an adventure of curiosity and discovery.",
+      "Empowering the next generation with lifelong love for learning."
     ],
-    pandaMessage: "Dream big — the sky is NOT the limit! 🌠",
-    videoPlaceholder: null,
-    imagePlaceholder: "vision-visual",
+    pandaMessage: "Seeing a bright future for every child! 🔭",
+    image: null,
     bgColor: "#1a0a2d",
     accentColor: "#CE93D8",
   },
@@ -277,13 +372,13 @@ export const slides = [
     title: "Our Mission",
     icon: "🎯",
     points: [
-      "Making learning exciting, interactive, and accessible for every child — supporting both educational and personal development.",
-      "Empowering children with the skills and confidence they need to succeed in the future through early education foundations.",
-      "Through innovation and creativity, transforming education into an enjoyable and meaningful experience that lasts a lifetime.",
+      "Make learning fun, interactive, and accessible for ages 2–7.",
+      "Empower children through creativity, play, and modern technology.",
+      "Support parents with tools to track and guide the learning journey.",
+      "Prepare children for a brighter, technology-driven future."
     ],
-    pandaMessage: "Our mission is YOUR child's success! 💪",
-    videoPlaceholder: null,
-    imagePlaceholder: "mission-visual",
+    pandaMessage: "On a mission to make magic happen! 🎯",
+    image: null,
     bgColor: "#2d1a0a",
     accentColor: "#FFA726",
   },
@@ -291,16 +386,16 @@ export const slides = [
     id: 18,
     type: "cta",
     slideNumber: "18",
-    title: "Join Our Mission",
-    icon: "🤝",
+    title: "Get Started Today!",
+    icon: "👉",
     points: [
-      "Seeking strategic partners and investors to support GENIE-US growth — together we can scale the platform and reach more children globally.",
-      "Collaboration opportunities include funding, partnerships, and distribution channels to accelerate development and expand impact.",
-      "Join us in shaping the future of early childhood education and making quality learning accessible to every child.",
+      "Start learning now — Sign up in minutes!",
+      "Explore interactive lessons and games for free.",
+      "Track your child's progress with real-time updates.",
+      "Join the GENIE-US family and transform education."
     ],
-    pandaMessage: "Come join the GENIE-US family! 🎉",
-    videoPlaceholder: null,
-    imagePlaceholder: "cta-visual",
+    pandaMessage: "Your adventure starts with one click! 🎉",
+    image: null,
     bgColor: "#0a2d1a",
     accentColor: "#00E676",
   },
@@ -311,13 +406,13 @@ export const slides = [
     title: "Thank You!",
     icon: "🌟",
     points: [
-      "GENIE-US represents a new approach to learning — combining fun, creativity, and education into a movement that transforms how children learn.",
-      "With a focus on engagement and accessibility, GENIE-US has the potential to make a lasting impact in the global education sector.",
-      "Thank you for your time and consideration. We look forward to building the future of early childhood education together!",
+      "GENIE-US — Where Learning Becomes an Adventure.",
+      "A new way of thinking about early childhood education.",
+      "Inspiring curiosity, building confidence, and creating impact.",
+      "Thank you for your time and for being part of the future!"
     ],
-    pandaMessage: "See you in class! Learning is MAGIC! 🪄",
-    videoPlaceholder: null,
-    imagePlaceholder: "closing-visual",
+    pandaMessage: "Magic is in learning, see you soon! 🪄",
+    image: null,
     bgColor: "#1a0a4e",
     accentColor: "#FFD700",
   },

@@ -4,30 +4,35 @@ import { slides } from "./data";
 import SlideRenderer from "./components/SlideRenderer.jsx";
 import "./style.scss";
 
-// Slide transition variants based on direction
+// Slide transition variants
 const slideVariants = {
   enter: (dir) => ({
     x: dir > 0 ? "100%" : "-100%",
     opacity: 0,
-    scale: 0.94,
+    filter: "blur(10px)",
+    scale: 0.9,
   }),
   center: {
     x: 0,
     opacity: 1,
+    filter: "blur(0px)",
     scale: 1,
     transition: {
-      x: { type: "spring", stiffness: 280, damping: 30 },
-      opacity: { duration: 0.25 },
-      scale: { duration: 0.35 },
+      x: { type: "spring", stiffness: 300, damping: 30 },
+      opacity: { duration: 0.3 },
+      filter: { duration: 0.4 },
+      scale: { duration: 0.4 },
     },
   },
   exit: (dir) => ({
     x: dir > 0 ? "-100%" : "100%",
     opacity: 0,
-    scale: 0.94,
+    filter: "blur(10px)",
+    scale: 0.9,
     transition: {
-      x: { type: "spring", stiffness: 280, damping: 30 },
+      x: { type: "spring", stiffness: 300, damping: 30 },
       opacity: { duration: 0.2 },
+      filter: { duration: 0.3 },
       scale: { duration: 0.3 },
     },
   }),
@@ -36,10 +41,10 @@ const slideVariants = {
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(1); // 1 = forward, -1 = backward
+  const [direction, setDirection] = useState(1);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2800);
+    const timer = setTimeout(() => setIsLoading(false), 3500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -57,13 +62,10 @@ export default function App() {
     }
   }, [currentIndex]);
 
-  const goTo = useCallback(
-    (index) => {
-      setDirection(index > currentIndex ? 1 : -1);
-      setCurrentIndex(index);
-    },
-    [currentIndex]
-  );
+  const goTo = useCallback((index) => {
+    setDirection(index > currentIndex ? 1 : -1);
+    setCurrentIndex(index);
+  }, [currentIndex]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -83,22 +85,9 @@ export default function App() {
   if (isLoading) return <LoadingScreen />;
 
   const currentSlide = slides[currentIndex];
-  const isFirst = currentIndex === 0;
-  const isLast = currentIndex === slides.length - 1;
-  const progress = ((currentIndex + 1) / slides.length) * 100;
 
   return (
-    <div
-      className="presentation-shell"
-      style={{
-        width: "100vw",
-        height: "100vh",
-        overflow: "hidden",
-        position: "relative",
-        background: "#050010",
-      }}
-    >
-      {/* ── SLIDE AREA ── */}
+    <div className="presentation-shell bg-[#fcfdff] w-screen h-screen overflow-hidden relative selection:bg-orange-100">
       <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.div
           key={currentSlide.id}
@@ -107,13 +96,7 @@ export default function App() {
           initial="enter"
           animate="center"
           exit="exit"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            willChange: "transform, opacity",
-          }}
+          className="absolute inset-0 w-full h-full"
         >
           <SlideRenderer
             slide={currentSlide}
@@ -123,178 +106,98 @@ export default function App() {
         </motion.div>
       </AnimatePresence>
 
-      {/* ── LEFT ARROW ── */}
-      {!isFirst && (
-        <motion.button
-          id="btn-prev"
-          onClick={goPrev}
-          className="nav-arrow nav-arrow-left"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          whileHover={{ scale: 1.12 }}
-          whileTap={{ scale: 0.92 }}
-          aria-label="Previous slide"
-        >
-          <span className="arrow-icon">‹</span>
-        </motion.button>
-      )}
-
-      {/* ── RIGHT ARROW ── */}
-      {!isLast && (
-        <motion.button
-          id="btn-next"
-          onClick={goNext}
-          className="nav-arrow nav-arrow-right"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          whileHover={{ scale: 1.12 }}
-          whileTap={{ scale: 0.92 }}
-          aria-label="Next slide"
-        >
-          <span className="arrow-icon">›</span>
-        </motion.button>
-      )}
-
-      {/* ── TOP BAR ── */}
-      <TopBar currentIndex={currentIndex} total={slides.length} progress={progress} />
-
-      {/* ── SLIDE DOTS ── */}
-      <SlideDots
-        slides={slides}
-        currentIndex={currentIndex}
-        goTo={goTo}
-      />
-
-      {/* ── KEYBOARD HINT (first slide only) ── */}
-      {currentIndex === 0 && (
-        <motion.div
-          className="keyboard-hint"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ delay: 1.5 }}
-        >
-          <span>← → Arrow keys to navigate</span>
-        </motion.div>
-      )}
-    </div>
-  );
-}
-
-/* ─────────────────────────────── TOP BAR ─────────────────────────────── */
-function TopBar({ currentIndex, total, progress }) {
-  return (
-    <div className="top-bar">
-      {/* Logo */}
-      <div className="top-bar-logo">
-        <img
-          src="/professor-panda.png"
-          alt="Professor Panda"
-          className="top-bar-avatar"
-        />
-        <span className="top-bar-brand">GENIE-US</span>
+      {/* Nav Arrows */}
+      <div className="hidden lg:block">
+        {!(currentIndex === 0) && (
+          <button onClick={goPrev} className="nav-arrow left" aria-label="Previous">‹</button>
+        )}
+        {!(currentIndex === slides.length - 1) && (
+          <button onClick={goNext} className="nav-arrow right" aria-label="Next">›</button>
+        )}
       </div>
 
-      {/* Progress */}
-      <div className="top-bar-progress-wrap">
-        <div className="top-bar-progress-bar">
-          <motion.div
-            className="top-bar-progress-fill"
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.4 }}
+      {/* Pagination */}
+      <div className="pagination-wrap">
+        {slides.map((s, i) => (
+          <button
+            key={s.id}
+            onClick={() => goTo(i)}
+            className={`dot ${i === currentIndex ? "active" : ""}`}
+            title={s.title}
           />
-        </div>
-        <span className="top-bar-counter">
-          {currentIndex + 1} / {total}
-        </span>
+        ))}
+      </div>
+
+      {/* Top Bar Logo Only */}
+      <div className="fixed top-6 left-8 z-[100] flex items-center gap-3 liquid-glass px-5 py-3 border-white/40">
+        <img src="/professor-panda.png" alt="Panda" className="w-10 h-10 object-contain drop-shadow-md" />
+        <span className="liquid-text text-xl">GENIE-US</span>
+      </div>
+
+      {/* Slide Counter */}
+      <div className="fixed top-6 right-8 z-[100] liquid-glass px-5 py-3 border-white/40 font-cartoon text-slate-500">
+        <span className="text-orange-500">{currentIndex + 1}</span> / {slides.length}
       </div>
     </div>
   );
 }
 
-/* ─────────────────────────────── DOTS ─────────────────────────────── */
-function SlideDots({ slides, currentIndex, goTo }) {
-  return (
-    <div className="slide-dots-bar">
-      {slides.map((s, i) => (
-        <button
-          key={s.id}
-          id={`dot-${s.id}`}
-          onClick={() => goTo(i)}
-          className={`slide-dot ${i === currentIndex ? "active" : ""}`}
-          title={s.title}
-          aria-label={`Go to slide ${i + 1}: ${s.title}`}
-        />
-      ))}
-    </div>
-  );
-}
-
-/* ─────────────────────────────── LOADING ─────────────────────────────── */
 function LoadingScreen() {
   return (
     <motion.div
       className="loading-screen"
-      exit={{ opacity: 0, scale: 1.04 }}
-      transition={{ duration: 0.7 }}
+      exit={{ opacity: 0, scale: 1.1, filter: "blur(24px)" }}
+      transition={{ duration: 1, ease: "easeInOut" }}
     >
-      <div className="stars-layer" />
-
-      {["⭐", "🌟", "✨", "📚", "🎮", "🌈"].map((e, i) => (
-        <motion.span
-          key={i}
-          style={{
-            position: "absolute",
-            left: `${10 + i * 15}%`,
-            top: `${20 + (i % 2) * 45}%`,
-            fontSize: "2.2rem",
-            opacity: 0.15,
-          }}
-          animate={{ y: [0, -22, 0], opacity: [0.15, 0.35, 0.15] }}
-          transition={{ duration: 3 + i, repeat: Infinity, delay: i * 0.5 }}
-        >
-          {e}
-        </motion.span>
-      ))}
+      <div className="magic-particles" />
+      <div className="blob-layer">
+        <div className="blob w-[800px] h-[800px] bg-orange-200/30 -top-40 -left-60" />
+        <div className="blob w-[600px] h-[600px] bg-blue-200/30 -bottom-20 -right-40" />
+        <div className="blob w-[400px] h-[400px] bg-purple-200/20 top-1/4 left-1/2" />
+      </div>
 
       <div className="loading-content">
-        <motion.img
-          src="/professor-panda.png"
-          alt="Professor Panda"
-          className="loading-panda"
-          initial={{ scale: 0, rotate: -20 }}
-          animate={{ scale: 1, rotate: 0, y: [0, -14, 0] }}
-          transition={{
-            scale: { duration: 0.8, ease: "backOut" },
-            rotate: { duration: 0.8 },
-            y: { duration: 2.5, repeat: Infinity, delay: 1 },
-          }}
-        />
+        <div className="loading-panda-wrap relative">
+          <motion.img
+            src="/professor-panda.png"
+            alt="Professor Panda"
+            className="w-56 md:w-72 object-contain drop-shadow-[0_20px_50px_rgba(249,115,22,0.4)]"
+            initial={{ scale: 0.5, opacity: 0, rotate: -20 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0, y: [0, -25, 0] }}
+            transition={{
+              scale: { type: "spring", stiffness: 200, damping: 25 },
+              y: { duration: 3.5, repeat: Infinity, ease: "easeInOut" }
+            }}
+          />
+          <motion.div
+            className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-40 h-5 bg-black/5 blur-2xl rounded-full"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.3, 0.1] }}
+            transition={{ duration: 3.5, repeat: Infinity }}
+          />
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-        >
-          <h1 className="loading-title">GENIE-US</h1>
-          <p className="loading-sub">Learning is Magic! 🪄</p>
-        </motion.div>
+        <div className="mt-12">
+          <h1 className="loading-title liquid-text italic">GENIE-US</h1>
+          <motion.p
+            className="font-bubble text-2xl text-blue-400 tracking-[0.2em] mt-4"
+            animate={{ opacity: [0.4, 1, 0.4], y: [0, -5, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity }}
+          >
+            BREWING MAGIC LEARNING...
+          </motion.p>
+        </div>
 
-        <motion.div
-          className="loading-dots"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.1 }}
-        >
-          {[0, 1, 2].map((i) => (
+        <div className="flex gap-5 mt-10">
+          {[0, 1, 2, 3].map((i) => (
             <motion.div
               key={i}
-              className="loading-dot"
-              animate={{ y: [0, -10, 0], opacity: [1, 0.3, 1] }}
-              transition={{ duration: 0.7, repeat: Infinity, delay: i * 0.2 }}
+              className="w-5 h-5 rounded-full liquid-glass border-white/50"
+              style={{ background: i % 2 === 0 ? 'var(--panda-orange)' : 'var(--panda-blue)' }}
+              animate={{ scale: [1, 1.6, 1], y: [0, -15, 0] }}
+              transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
             />
           ))}
-        </motion.div>
+        </div>
       </div>
     </motion.div>
   );

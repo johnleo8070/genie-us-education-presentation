@@ -3,89 +3,72 @@ import { motion } from "framer-motion";
 
 /* ──────────────── helpers & sub-components ──────────────── */
 
-const subjectConfig = {
-    English: { color: "#EC4899", bg: "rgba(236,72,153,0.1)", icon: "📖", border: "#EC4899" },
-    Maths: { color: "#EAB308", bg: "rgba(234,179,8,0.1)", icon: "🔢", border: "#EAB308" },
-    Science: { color: "#22C55E", bg: "rgba(34,197,94,0.1)", icon: "🔬", border: "#22C55E" },
-    Coding: { color: "#F97316", bg: "rgba(249,115,22,0.1)", icon: "💻", border: "#F97316" },
-    Music: { color: "#A855F7", bg: "rgba(168,85,247,0.1)", icon: "🎵", border: "#A855F7" },
-};
-
 const accentPool = ["#F97316", "#3B82F6", "#EAB308", "#22C55E", "#A855F7", "#EC4899"];
 
-const bgGradients = [
-    "linear-gradient(to bottom, #E0E7FF, #C7D2FE, #ffffff)", // Indigo
-    "linear-gradient(to bottom, #ffffff, #E0F2FE, #ffffff)", // Sky
-    "linear-gradient(to bottom, #FFF8E7, #ffffff)",          // Yellow
-    "linear-gradient(to bottom, #ffffff, #FEF3C7, #fde68a50)", // Amber
-    "linear-gradient(to bottom, #f5f3ff, #ede9fe, #ffffff)",   // Purple
-];
+// Magical Blobs
+function BackgroundMagic({ accent }) {
+    return (
+        <div className="blob-layer">
+            <div className="blob w-[600px] h-[600px] -top-60 -left-40" style={{ background: `${accent}25` }} />
+            <div className="blob w-[500px] h-[500px] bottom-0 right-0" style={{ background: `var(--panda-yellow)20` }} />
+            <div className="blob w-[300px] h-[300px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ background: `var(--panda-blue)10` }} />
+        </div>
+    );
+}
 
-// Stagger wrapper
+// Animation variants
 const staggerContainer = {
     hidden: {},
-    show: { transition: { staggerChildren: 0.13, delayChildren: 0.15 } },
+    show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
 };
 const fadeUp = {
-    hidden: { opacity: 0, y: 28 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+    hidden: { opacity: 0, y: 30, filter: "blur(5px)" },
+    show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: "easeOut" } },
 };
 
 /* ─── Panda panel ─── */
 function PandaPanel({ message, accentColor, large = false }) {
     return (
-        <div className={`panda-panel ${large ? "panda-panel--large" : ""}`}>
-            <div className="speech-bubble" style={{ borderColor: accentColor + "80" }}>
-                <p className="font-cartoon text-sm text-center" style={{ color: accentColor }}>
-                    {message}
-                </p>
+        <motion.div
+            className={`panda-panel flex flex-col items-center gap-4 ${large ? "scale-110" : "scale-90"}`}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 }}
+        >
+            <div className="speech-bubble font-cartoon text-sm text-slate-600">
+                <p>{message}</p>
             </div>
             <motion.img
                 src="/professor-panda.png"
                 alt="Professor Panda"
-                className={large ? "panda-img-large" : "panda-img"}
-                style={{ filter: `drop-shadow(0 0 28px ${accentColor}50)` }}
-                animate={{ y: [0, -14, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className={large ? "w-64 md:w-80" : "w-48 md:w-56"}
+                style={{ filter: `drop-shadow(0 20px 40px ${accentColor}40)` }}
+                animate={{ y: [0, -15, 0], rotate: [0, 2, -2, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             />
-        </div>
+        </motion.div>
     );
 }
 
-/* ─── YouTube embed ─── */
-function YouTubeEmbed({ videoId, compact = false }) {
+/* ─── Media Placeholder ─── */
+function MediaDisplay({ image, label }) {
+    if (image) {
+        return (
+            <motion.div
+                className="relative group p-4 liquid-glass"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+            >
+                <div className="absolute -inset-4 bg-gradient-to-tr from-orange-400 to-amber-300 rounded-[40px] opacity-20 blur-2xl group-hover:opacity-40 transition-opacity" />
+                <img src={image} alt={label} className="relative z-10 w-full rounded-[24px] shadow-2xl border-4 border-white/50" />
+            </motion.div>
+        );
+    }
     return (
-        <div
-            className="youtube-embed-wrap"
-            style={{
-                aspectRatio: "16/9",
-                width: "100%",
-                maxHeight: compact ? 220 : 320,
-            }}
-        >
-            <iframe
-                src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&color=white`}
-                title="GENIE-US Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                style={{ width: "100%", height: "100%", border: "none", display: "block" }}
-                loading="lazy"
-            />
-        </div>
-    );
-}
-
-/* ─── Media placeholder ─── */
-function MediaPlaceholder({ type, label, compact = false }) {
-    return (
-        <div className={`media-placeholder ${compact ? "media-placeholder--compact" : ""}`}>
-            <div className="video-placeholder-icon" style={{ borderColor: 'var(--panda-orange)' }}>
-                {type === "video" ? "▶️" : "🖼️"}
-            </div>
-            <p className="font-cartoon text-sm text-center" style={{ color: 'var(--panda-orange)' }}>
-                {type === "video" ? "🎬 Video Goes Here" : "🖼️ Image Goes Here"}
-            </p>
-            {label && <p className="text-xs text-center font-body px-3 text-slate-400">{label}</p>}
+        <div className="liquid-glass border-dashed border-2 flex flex-col items-center justify-center p-12 min-h-[300px]">
+            <span className="text-4xl mb-4">🖼️</span>
+            <p className="font-cartoon text-slate-400">Magic Image Needed</p>
         </div>
     );
 }
@@ -93,259 +76,176 @@ function MediaPlaceholder({ type, label, compact = false }) {
 /* ─── Bullet point ─── */
 function BulletPoint({ text, index, accentColor }) {
     return (
-        <motion.div className="point-item" variants={fadeUp}>
+        <motion.div className="flex gap-4 p-5 liquid-glass border-none hover:bg-white/60 transition-all group" variants={fadeUp}>
             <div
-                className="point-bullet"
+                className="w-10 h-10 rounded-2xl flex items-center justify-center text-white font-cartoon text-lg shadow-lg shrink-0 group-hover:scale-110 transition-transform"
                 style={{ background: `linear-gradient(135deg, ${accentColor}, ${accentColor}dd)` }}
             >
-                <span className="text-white text-xs font-bold">{index + 1}</span>
+                {index + 1}
             </div>
-            <p className="font-body text-slate-700 text-sm md:text-base leading-relaxed">{text}</p>
+            <p className="text-slate-600 font-body text-base md:text-lg leading-relaxed">{text}</p>
         </motion.div>
     );
 }
 
-/* ──────────────────────────────────────────────────────────
-   SLIDE LAYOUTS
-────────────────────────────────────────────────────────── */
+/* ─── Section Card ─── */
+function SectionCard({ section, accentColor }) {
+    return (
+        <motion.div className="liquid-glass p-6 border-white/40 transition-all duration-500 hover:-translate-y-2 hover:bg-white/50" variants={fadeUp}>
+            <h4 className="font-cartoon text-xl mb-4 flex items-center gap-2" style={{ color: accentColor }}>
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: accentColor }} />
+                {section.title}
+            </h4>
+            <div className="space-y-3">
+                {section.items.map((item, i) => (
+                    <div key={i} className="flex gap-3 items-start group">
+                        <span className="text-orange-400 text-xs mt-1.5 transition-transform group-hover:scale-150">✦</span>
+                        <p className="text-sm text-slate-500 font-body leading-relaxed">{item}</p>
+                    </div>
+                ))}
+            </div>
+        </motion.div>
+    );
+}
 
 /* ── 1. TITLE SLIDE ── */
 function TitleSlide({ slide }) {
     return (
-        <div
-            className="slide-full"
-            style={{
-                background: bgGradients[0],
-            }}
-        >
-            <div className="blob-layer">
-                <div style={{ position: 'absolute', top: '10%', left: '10%', width: '150px', height: '150px', background: 'rgba(249,115,22,0.1)', filter: 'blur(30px)', borderRadius: '50%' }} />
-                <div style={{ position: 'absolute', bottom: '10%', right: '10%', width: '250px', height: '250px', background: 'rgba(59,130,246,0.1)', filter: 'blur(30px)', borderRadius: '50%' }} />
-            </div>
-            {/* Soft floating emojis (reduced from dark mode stars) */}
-            {["⭐", "📚", "🪄", "🎓", "🎮"].map((e, i) => (
-                <span key={i} className="float-deco"
-                    style={{
-                        left: `${15 + i * 18}%`, top: `${20 + (i % 2) * 30}%`,
-                        animationDelay: `${i * 1.5}s`, animationDuration: `${6 + i}s`
-                    }}>
-                    {e}
-                </span>
-            ))}
+        <div className="slide-full bg-white flex items-center justify-center min-h-screen w-full relative">
+            <BackgroundMagic accent="var(--panda-orange)" />
 
-            <div className="container slide-inner slide-inner--title">
-                {/* Left */}
+            <div className="container grid lg:grid-cols-2 gap-16 items-center relative z-10 mx-auto px-12">
                 <motion.div
-                    className="title-left"
-                    initial={{ opacity: 0, x: -60 }}
+                    initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.7, ease: "easeOut" }}
+                    transition={{ duration: 0.8 }}
                 >
-                    <div className="slide-badge-row mb-6">
-                        <div className="slide-badge">01</div>
-                        <span className="font-cartoon text-sm" style={{ color: 'var(--panda-blue)' }}>PRESENTATION START</span>
+                    <div className="flex items-center gap-3 mb-8">
+                        <div className="w-12 h-12 bg-orange-500 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-6">
+                            <span className="text-white font-cartoon text-xl">01</span>
+                        </div>
+                        <span className="font-cartoon text-orange-500 tracking-widest text-sm uppercase">{slide.tag}</span>
                     </div>
 
-                    <motion.h1
-                        className="cartoon-title title-gradient text-hero"
-                        initial={{ scale: 0.7, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.2, duration: 0.7, ease: "backOut" }}
-                    >
-                        GENIE-US
-                    </motion.h1>
+                    <h1 className="liquid-text text-7xl md:text-8xl lg:text-9xl mb-6 -ml-[60px]">
+                        {slide.title}
+                    </h1>
 
-                    <motion.div
-                        className="lamp-icon"
-                        animate={{ rotate: [0, 10, -10, 0] }}
-                        transition={{ duration: 3, repeat: Infinity }}
-                    >🪄</motion.div>
+                    <h2 className="font-bubble text-3xl md:text-5xl text-slate-600 mb-10 leading-tight -ml-[10px]">
+                        {slide.subtitle}
+                    </h2>
 
-                    <motion.h2
-                        className="font-bubble text-slate-600 text-xl md:text-2xl lg:text-3xl mb-4"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 }}
-                    >
-                        Transforming Early Childhood Learning Through Play
-                    </motion.h2>
-
-                    <p className="font-body text-slate-400 text-sm mb-6">Board Presentation · {new Date().getFullYear()}</p>
-
-                    <div className="flex flex-wrap gap-3">
-                        <div className="cta-btn-primary">🚀 Explore Presentation</div>
-                        <div className="cta-btn-secondary">🤝 Partner With Us</div>
+                    <div className="flex flex-wrap gap-5">
+                        <button className="liquid-btn primary text-lg">🚀 START ADVENTURE</button>
+                        <button className="liquid-btn text-orange-500 hover:text-orange-600">
+                            WATCH DEMO
+                        </button>
                     </div>
                 </motion.div>
 
-                {/* Right */}
                 <motion.div
-                    className="title-right"
-                    initial={{ opacity: 0, x: 60 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+                    className="relative flex justify-center"
+                    initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
+                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                    transition={{ duration: 1, ease: "backOut" }}
                 >
-                    <div className="speech-bubble mb-6" style={{ maxWidth: 220 }}>
-                        <p className="font-cartoon text-sm text-center" style={{ color: 'var(--panda-orange)' }}>
-                            {slide.pandaMessage}
-                        </p>
-                    </div>
-                    <motion.img
-                        src="/professor-panda.png"
-                        alt="Professor Panda"
-                        className="panda-title-img"
-                        style={{ filter: "drop-shadow(0 15px 30px rgba(0,0,0,0.15))" }}
-                        animate={{ y: [0, -18, 0] }}
-                        transition={{ duration: 3, repeat: Infinity }}
-                    />
-                    {slide.videoPlaceholder && (
-                        <div className="mt-6 w-full max-w-xs">
-                            <MediaPlaceholder type="video" label="Intro video" compact />
+                    <div className="relative z-10">
+                        {slide.image && <img src={slide.image} alt="Cover" className="rounded-[40px] shadow-2xl border-[12px] border-white/60 max-w-full" />}
+                        <div className="absolute -bottom-16 -right-16 hidden xl:block">
+                            <PandaPanel message={slide.pandaMessage} accentColor="var(--panda-orange)" large />
                         </div>
-                    )}
+                    </div>
                 </motion.div>
             </div>
         </div>
     );
 }
 
-/* ── 2. STANDARD SLIDE (most slides) ── */
+/* ── 2. STANDARD SLIDE ── */
 function StandardSlide({ slide, index }) {
     const accent = accentPool[index % accentPool.length];
-    const bgGrad = bgGradients[(index + 1) % bgGradients.length];
 
     return (
-        <div
-            className="slide-full"
-            style={{
-                background: bgGrad,
-            }}
-        >
-            <div className="blob-layer">
-                <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '300px', height: '300px', background: `${accent}15`, filter: 'blur(50px)', borderRadius: '50%' }} />
-                <div style={{ position: 'absolute', bottom: '0%', right: '0%', width: '200px', height: '200px', background: `rgba(249,115,22,0.1)`, filter: 'blur(40px)', borderRadius: '50%' }} />
-            </div>
-            {["⭐", "✨", "🌟"].map((e, i) => (
-                <span key={i} className="float-deco"
-                    style={{ left: `${15 + i * 30}%`, top: `${12 + i * 25}%`, animationDelay: `${i * 2}s` }}>
-                    {e}
-                </span>
-            ))}
+        <div className="slide-full bg-white flex flex-col justify-center min-h-screen w-full relative">
+            <BackgroundMagic accent={accent} />
 
-            <div className="container slide-inner slide-inner--standard">
-                {/* ─ LEFT PANE ─ */}
-                <div className="standard-left">
-                    {/* Slide header */}
-                    <motion.div
-                        className="slide-badge-row mb-4"
-                        initial={{ opacity: 0, y: -16 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <div className="slide-badge">{slide.slideNumber}</div>
-                        <h2
-                            className="cartoon-title text-2xl md:text-3xl lg:text-4xl"
-                            style={{
-                                color: accent,
-                            }}
-                        >
-                            {slide.icon} {slide.title}
-                        </h2>
-                    </motion.div>
-
-                    {/* Divider */}
-                    <div
-                        className="h-1 rounded-full mb-5"
-                        style={{ width: 80, background: `linear-gradient(90deg, ${accent}, transparent)` }}
-                    />
-
-                    {/* Bullet points */}
-                    <motion.div
-                        className="flex flex-col gap-3"
-                        variants={staggerContainer}
-                        initial="hidden"
-                        animate="show"
-                    >
-                        {slide.points?.map((pt, i) => (
-                            <BulletPoint key={i} text={pt} index={i} accentColor={accent} />
-                        ))}
-                    </motion.div>
-
-                    {/* Subjects grid */}
-                    {slide.subjects && (
-                        <motion.div
-                            className="flex flex-wrap gap-2 mt-4"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.55 }}
-                        >
-                            {slide.subjects.map((subj) => {
-                                const cfg = subjectConfig[subj] || {};
-                                return (
-                                    <div
-                                        key={subj}
-                                        className="subject-pill"
-                                        style={{ background: cfg.bg, borderColor: cfg.border, color: cfg.color }}
-                                    >
-                                        <span>{cfg.icon}</span>
-                                        <span className="font-cartoon">{subj}</span>
-                                    </div>
-                                );
-                            })}
-                        </motion.div>
-                    )}
-
-                    {/* Milestones */}
-                    {slide.milestones && (
-                        <motion.div
-                            className="grid grid-cols-3 gap-3 mt-4"
-                            variants={staggerContainer}
-                            initial="hidden"
-                            animate="show"
-                        >
-                            {slide.milestones.map((m, i) => (
-                                <motion.div
-                                    key={i}
-                                    className="milestone-card"
-                                    style={{ borderColor: accentPool[i % accentPool.length] }}
-                                    variants={fadeUp}
-                                >
-                                    <div className="text-3xl mb-2">{m.icon}</div>
-                                    <div className="font-cartoon text-sm mb-1"
-                                        style={{ color: accentPool[i % accentPool.length] }}>
-                                        {m.phase}
-                                    </div>
-                                    <p className="font-body text-slate-600 text-xs leading-snug">{m.label}</p>
-                                </motion.div>
-                            ))}
-                        </motion.div>
-                    )}
-
-                    {/* Media: YouTube or placeholder */}
-                    {slide.youtubeId ? (
-                        <div className="mt-4">
-                            <YouTubeEmbed videoId={slide.youtubeId} compact />
-                        </div>
-                    ) : (slide.videoPlaceholder || slide.imagePlaceholder) ? (
-                        <div className="mt-4">
-                            <MediaPlaceholder
-                                type={slide.videoPlaceholder ? "video" : "image"}
-                                label={slide.videoPlaceholder || slide.imagePlaceholder}
-                                compact
-                            />
-                        </div>
-                    ) : null}
-                </div>
-
-                {/* ─ RIGHT PANE — Panda ─ */}
+            <div className="container flex flex-col pt-32 pb-20 relative z-10 h-full mx-auto px-12">
+                {/* Header */}
                 <motion.div
-                    className="standard-right"
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
+                    className="flex items-center gap-6 mb-12"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
                 >
-                    <PandaPanel message={slide.pandaMessage} accentColor={accent} />
+                    <div className="w-16 h-16 rounded-3xl flex items-center justify-center text-white text-2xl font-cartoon shadow-xl transform -rotate-3" style={{ background: `linear-gradient(135deg, ${accent}, ${accent}dd)` }}>
+                        {slide.slideNumber}
+                    </div>
+                    <h2 className="font-cartoon text-4xl md:text-6xl" style={{ color: accent }}>
+                        {slide.icon} {slide.title}
+                    </h2>
+                    <div className="flex-grow h-1 bg-slate-100/50 rounded-full ml-8 hidden md:block" />
                 </motion.div>
+
+                <div className="grid lg:grid-cols-12 gap-12 flex-grow items-center">
+                    {/* Content */}
+                    <div className="lg:col-span-8">
+                        {slide.sections ? (
+                            <motion.div className="grid md:grid-cols-3 gap-6" variants={staggerContainer} initial="hidden" animate="show">
+                                {slide.sections.map((sec, i) => (
+                                    <SectionCard key={i} section={sec} accentColor={accent} />
+                                ))}
+                            </motion.div>
+                        ) : slide.content ? (
+                            <motion.div className="grid md:grid-cols-2 gap-8" variants={staggerContainer} initial="hidden" animate="show">
+                                {slide.content.map((group, i) => (
+                                    <motion.div key={i} className="liquid-glass p-8 group hover:bg-white/50 transition-all" variants={fadeUp}>
+                                        <h3 className="font-cartoon text-2xl mb-6 flex items-center gap-3" style={{ color: accent }}>
+                                            <span className="w-1.5 h-8 rounded-full" style={{ backgroundColor: accent }} />
+                                            {group.title}
+                                        </h3>
+                                        <div className="space-y-4">
+                                            {group.items.map((item, j) => (
+                                                <div key={j} className="flex gap-4 items-start">
+                                                    <span className="text-xl" style={{ color: accent }}>✔</span>
+                                                    <p className="text-slate-600 font-body">{item}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
+                        ) : (
+                            <motion.div className="grid md:grid-cols-2 gap-6" variants={staggerContainer} initial="hidden" animate="show">
+                                {slide.points?.map((pt, i) => (
+                                    <BulletPoint key={i} text={pt} index={i} accentColor={accent} />
+                                ))}
+                            </motion.div>
+                        )}
+
+                        {slide.milestones && (
+                            <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-12" variants={staggerContainer} initial="hidden" animate="show">
+                                {slide.milestones.map((m, i) => (
+                                    <motion.div key={i} className="liquid-glass p-6 text-center group hover:bg-white/50 transition-all" variants={fadeUp} style={{ borderColor: `${accentPool[i % accentPool.length]}40` }}>
+                                        <div className="text-4xl mb-4 group-hover:scale-125 transition-transform">{m.icon}</div>
+                                        <div className="font-cartoon text-slate-800 mb-2">{m.phase}</div>
+                                        <p className="text-sm font-body text-slate-500 leading-relaxed">{m.label}</p>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
+                        )}
+                    </div>
+
+                    {/* Media */}
+                    <div className="lg:col-span-4 flex flex-col gap-8 items-center">
+                        {slide.image ? (
+                            <MediaDisplay image={slide.image} label={slide.title} />
+                        ) : (
+                            <div className="hidden lg:block w-full">
+                                <PandaPanel message={slide.pandaMessage} accentColor={accent} large />
+                            </div>
+                        )}
+                        {slide.image && <PandaPanel message={slide.pandaMessage} accentColor={accent} />}
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -353,83 +253,48 @@ function StandardSlide({ slide, index }) {
 
 /* ── 3. CTA / CLOSING SLIDE ── */
 function CTASlide({ slide, index }) {
-    const accent = accentPool[index % accentPool.length] || "var(--panda-orange)";
-    const bgGrad = bgGradients[(index + 1) % bgGradients.length] || bgGradients[0];
+    const accent = accentPool[index % accentPool.length];
 
     return (
-        <div
-            className="slide-full"
-            style={{
-                background: bgGrad,
-            }}
-        >
-            <div className="blob-layer">
-                <div style={{ position: 'absolute', top: '20%', left: '30%', width: '300px', height: '300px', background: `${accent}15`, filter: 'blur(50px)', borderRadius: '50%' }} />
-            </div>
-
-            <div className="container slide-inner slide-inner--cta">
-                {/* Panda large left */}
+        <div className="slide-full bg-slate-50 flex items-center justify-center min-h-screen w-full relative">
+            <BackgroundMagic accent={accent} />
+            <div className="container grid lg:grid-cols-2 gap-20 items-center relative z-10 mx-auto px-12">
                 <motion.div
-                    className="cta-panda-wrap"
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.7 }}
+                    className="flex justify-center"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
                 >
-                    <div className="speech-bubble mb-4" style={{ maxWidth: 220, borderColor: accent + "90" }}>
-                        <p className="font-cartoon text-base text-center" style={{ color: accent }}>
-                            {slide.pandaMessage}
-                        </p>
+                    <div className="relative">
+                        <PandaPanel message={slide.pandaMessage} accentColor={accent} large />
                     </div>
-                    <motion.img
-                        src="/professor-panda.png"
-                        alt="Professor Panda"
-                        className="panda-img-large"
-                        style={{ filter: `drop-shadow(0 15px 30px rgba(0,0,0,0.15))` }}
-                        animate={{ y: [0, -18, 0], rotate: [0, 3, -3, 0] }}
-                        transition={{ duration: 4, repeat: Infinity }}
-                    />
                 </motion.div>
 
-                {/* Content right */}
                 <motion.div
-                    className="cta-content"
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.7, delay: 0.15 }}
+                    transition={{ duration: 0.8 }}
                 >
-                    <div className="slide-badge-row mb-5">
-                        <div className="slide-badge">{slide.slideNumber}</div>
-                        <h2
-                            className="cartoon-title text-3xl md:text-4xl"
-                            style={{ color: accent }}
-                        >
-                            {slide.icon} {slide.title}
-                        </h2>
+                    <div className="flex items-center gap-4 mb-8">
+                        <div className="w-16 h-16 rounded-3xl bg-orange-500 flex items-center justify-center text-white font-cartoon text-2xl shadow-xl transform -rotate-6">
+                            {slide.slideNumber}
+                        </div>
+                        <h2 className="font-cartoon text-5xl md:text-7xl" style={{ color: accent }}>{slide.title}</h2>
                     </div>
 
-                    <motion.div
-                        className="flex flex-col gap-3 mb-6"
-                        variants={staggerContainer}
-                        initial="hidden"
-                        animate="show"
-                    >
+                    <div className="space-y-6 mb-12">
                         {slide.points?.map((pt, i) => (
                             <BulletPoint key={i} text={pt} index={i} accentColor={accent} />
                         ))}
-                    </motion.div>
+                    </div>
 
-                    {slide.type === "cta" && (
-                        <div className="flex flex-wrap gap-3 mt-2">
-                            <a href="mailto:hello@genie-us.com" className="cta-btn-primary">📧 Get In Touch</a>
-                            <div className="cta-btn-secondary">⬆️ Back to Start</div>
-                        </div>
-                    )}
-
-                    {slide.type === "closing" && (
-                        <div className="cta-btn-primary inline-flex mt-2 cursor-default">
-                            🐼 Thank You — Learning is Magic!
-                        </div>
-                    )}
+                    <div className="flex flex-wrap gap-6">
+                        <button className="liquid-btn primary text-2xl px-12 py-6">✨ GET STARTED NOW</button>
+                        {slide.type === "cta" && (
+                            <button className="liquid-btn px-12 py-6 text-slate-500">
+                                CONTACT SUPPORT
+                            </button>
+                        )}
+                    </div>
                 </motion.div>
             </div>
         </div>
