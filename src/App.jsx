@@ -89,6 +89,16 @@ export default function App() {
 
   return (
     <div className="presentation-shell bg-[#fcfdff] w-screen h-screen overflow-hidden relative selection:bg-orange-100">
+      {/* Top Bar Logo & Counter */}
+      <div className="fixed top-8 left-10 z-[9999] flex items-center gap-6 liquid-glass px-8 py-5 border-white/40 pointer-events-auto">
+        <img src="/professor-panda.png" alt="Panda" className="w-20 h-20 object-contain drop-shadow-md" />
+        <span className="liquid-text text-4xl">GENIE-US</span>
+      </div>
+
+      <div className="fixed top-6 right-8 z-[9999] liquid-glass px-5 py-3 border-white/40 font-cartoon text-slate-500">
+        <span className="text-orange-500">{currentIndex + 1}</span> / {slides.length}
+      </div>
+
       <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.div
           key={currentSlide.id}
@@ -97,7 +107,7 @@ export default function App() {
           initial="enter"
           animate="center"
           exit="exit"
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 w-full h-full z-10"
         >
           <SlideRenderer
             slide={currentSlide}
@@ -131,17 +141,6 @@ export default function App() {
             title={s.title}
           />
         ))}
-      </div>
-
-      {/* Top Bar Logo Only */}
-      <div className="fixed top-6 left-8 z-[500] flex items-center gap-3 liquid-glass px-5 py-3 border-white/40">
-        <img src="/professor-panda.png" alt="Panda" className="w-10 h-10 object-contain drop-shadow-md" />
-        <span className="liquid-text text-xl">GENIE-US</span>
-      </div>
-
-      {/* Slide Counter */}
-      <div className="fixed top-6 right-8 z-[100] liquid-glass px-5 py-3 border-white/40 font-cartoon text-slate-500">
-        <span className="text-orange-500">{currentIndex + 1}</span> / {slides.length}
       </div>
     </div>
   );
