@@ -186,16 +186,23 @@ function TitleSlide({ slide }) {
                     transition={{ duration: 1, ease: "backOut" }}
                 >
                     <div className={`relative z-10 w-full ${hasText ? 'lg:w-[120%] lg:-ml-[10%]' : 'max-w-4xl px-4'}`}>
-                        {(slide.image || slide.video) && (
+                        {(slide.image || slide.video) ? (
                             <MediaDisplay
                                 image={slide.image}
                                 video={slide.video}
                                 label={slide.title}
                             />
+                        ) : (
+                            <div className="flex flex-col items-center gap-10">
+                                
+                                <PandaPanel message={slide.pandaMessage} accentColor="var(--panda-orange)" large />
+                            </div>
                         )}
-                        <div className="absolute -bottom-16 -right-16 hidden xl:block">
-                            <PandaPanel message={slide.pandaMessage} accentColor="var(--panda-orange)" large />
-                        </div>
+                        {(slide.image || slide.video) && (
+                            <div className="absolute -bottom-16 -right-16 hidden xl:block">
+                                <PandaPanel message={slide.pandaMessage} accentColor="var(--panda-orange)" large />
+                            </div>
+                        )}
                     </div>
                 </motion.div>
             </div>
