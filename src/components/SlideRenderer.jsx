@@ -76,14 +76,14 @@ function MediaDisplay({ image, label }) {
 /* ─── Bullet point ─── */
 function BulletPoint({ text, index, accentColor }) {
     return (
-        <motion.div className="flex gap-4 p-5 liquid-glass border-none hover:bg-white/60 transition-all group" variants={fadeUp}>
+        <motion.div className="flex gap-3 p-3 lg:p-4 liquid-glass border-none hover:bg-white/60 transition-all group" variants={fadeUp}>
             <div
-                className="w-10 h-10 rounded-2xl flex items-center justify-center text-white font-cartoon text-lg shadow-lg shrink-0 group-hover:scale-110 transition-transform"
+                className="w-8 h-8 rounded-xl flex items-center justify-center text-white font-cartoon text-sm shadow-lg shrink-0 group-hover:scale-110 transition-transform"
                 style={{ background: `linear-gradient(135deg, ${accentColor}, ${accentColor}dd)` }}
             >
                 {index + 1}
             </div>
-            <p className="text-slate-600 font-body text-base md:text-lg leading-relaxed">{text}</p>
+            <p className="text-slate-600 font-body text-sm md:text-base leading-relaxed">{text}</p>
         </motion.div>
     );
 }
@@ -91,16 +91,16 @@ function BulletPoint({ text, index, accentColor }) {
 /* ─── Section Card ─── */
 function SectionCard({ section, accentColor }) {
     return (
-        <motion.div className="liquid-glass p-6 border-white/40 transition-all duration-500 hover:-translate-y-2 hover:bg-white/50" variants={fadeUp}>
-            <h4 className="font-cartoon text-xl mb-4 flex items-center gap-2" style={{ color: accentColor }}>
+        <motion.div className="liquid-glass p-5 border-white/40 transition-all duration-500 hover:-translate-y-1 hover:bg-white/50 flex flex-col h-full" variants={fadeUp}>
+            <h4 className="font-cartoon text-lg mb-4 flex items-center gap-2" style={{ color: accentColor }}>
                 <span className="w-2 h-2 rounded-full" style={{ backgroundColor: accentColor }} />
                 {section.title}
             </h4>
-            <div className="space-y-3">
+            <div className="space-y-2 flex-grow">
                 {section.items.map((item, i) => (
-                    <div key={i} className="flex gap-3 items-start group">
-                        <span className="text-orange-400 text-xs mt-1.5 transition-transform group-hover:scale-150">✦</span>
-                        <p className="text-sm text-slate-500 font-body leading-relaxed">{item}</p>
+                    <div key={i} className="flex gap-2 items-start group">
+                        <span className="text-orange-400 text-[10px] mt-1.5 transition-transform group-hover:scale-150 shrink-0">✦</span>
+                        <p className="text-xs md:text-sm text-slate-500 font-body leading-snug">{item}</p>
                     </div>
                 ))}
             </div>
@@ -166,10 +166,10 @@ function StandardSlide({ slide, index }) {
     const accent = accentPool[index % accentPool.length];
 
     return (
-        <div className="slide-full bg-white flex flex-col justify-center min-h-screen w-full relative">
+        <div className="slide-full bg-white h-screen w-full relative overflow-hidden flex flex-col">
             <BackgroundMagic accent={accent} />
 
-            <div className="container flex flex-col pt-32 pb-20 relative z-10 h-full mx-auto px-12">
+            <div className="container relative z-10 flex flex-col h-full mx-auto px-6 md:px-12 pt-24 pb-12">
                 {/* Header */}
                 <motion.div
                     className="flex items-center gap-6 mb-12"
@@ -185,11 +185,19 @@ function StandardSlide({ slide, index }) {
                     <div className="flex-grow h-1 bg-slate-100/50 rounded-full ml-8 hidden md:block" />
                 </motion.div>
 
-                <div className="grid lg:grid-cols-12 gap-12 flex-grow items-center">
-                    {/* Content */}
-                    <div className="lg:col-span-8">
-                        {slide.sections ? (
-                            <motion.div className="grid md:grid-cols-3 gap-6" variants={staggerContainer} initial="hidden" animate="show">
+                <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 flex-grow overflow-hidden">
+                    {/* Content Area - Scrollable */}
+                    <div className="lg:col-span-9 xl:col-span-9 h-full overflow-y-auto pr-6 custom-scrollbar scroll-smooth">
+                        {slide.paragraphs ? (
+                            <motion.div className="space-y-6 max-w-4xl" variants={staggerContainer} initial="hidden" animate="show">
+                                {slide.paragraphs.map((p, i) => (
+                                    <motion.p key={i} className="text-slate-600 font-body text-base md:text-lg leading-relaxed liquid-glass p-6 border-none italic" variants={fadeUp}>
+                                        {p}
+                                    </motion.p>
+                                ))}
+                            </motion.div>
+                        ) : slide.sections ? (
+                            <motion.div className="grid md:grid-cols-2 xl:grid-cols-2 gap-6" variants={staggerContainer} initial="hidden" animate="show">
                                 {slide.sections.map((sec, i) => (
                                     <SectionCard key={i} section={sec} accentColor={accent} />
                                 ))}
@@ -197,7 +205,7 @@ function StandardSlide({ slide, index }) {
                         ) : slide.content ? (
                             <motion.div className="grid md:grid-cols-2 gap-8" variants={staggerContainer} initial="hidden" animate="show">
                                 {slide.content.map((group, i) => (
-                                    <motion.div key={i} className="liquid-glass p-8 group hover:bg-white/50 transition-all" variants={fadeUp}>
+                                    <motion.div key={i} className="liquid-glass p-8 group hover:bg-white/50 transition-all border-none" variants={fadeUp}>
                                         <h3 className="font-cartoon text-2xl mb-6 flex items-center gap-3" style={{ color: accent }}>
                                             <span className="w-1.5 h-8 rounded-full" style={{ backgroundColor: accent }} />
                                             {group.title}
@@ -205,8 +213,8 @@ function StandardSlide({ slide, index }) {
                                         <div className="space-y-4">
                                             {group.items.map((item, j) => (
                                                 <div key={j} className="flex gap-4 items-start">
-                                                    <span className="text-xl" style={{ color: accent }}>✔</span>
-                                                    <p className="text-slate-600 font-body">{item}</p>
+                                                    <span className="text-xl shrink-0" style={{ color: accent }}>✔</span>
+                                                    <p className="text-slate-600 font-body text-sm md:text-base leading-relaxed">{item}</p>
                                                 </div>
                                             ))}
                                         </div>
@@ -214,7 +222,7 @@ function StandardSlide({ slide, index }) {
                                 ))}
                             </motion.div>
                         ) : (
-                            <motion.div className="grid md:grid-cols-2 gap-6" variants={staggerContainer} initial="hidden" animate="show">
+                            <motion.div className="grid md:grid-cols-2 gap-4" variants={staggerContainer} initial="hidden" animate="show">
                                 {slide.points?.map((pt, i) => (
                                     <BulletPoint key={i} text={pt} index={i} accentColor={accent} />
                                 ))}
@@ -232,10 +240,21 @@ function StandardSlide({ slide, index }) {
                                 ))}
                             </motion.div>
                         )}
+
+                        {/* Scroll hint for dense slides */}
+                        <motion.div
+                            className="mt-8 flex items-center justify-center gap-2 text-slate-400 text-sm animate-bounce opacity-50"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 0.5 }}
+                            transition={{ delay: 2 }}
+                        >
+                            <span>Scroll for more</span>
+                            <span className="text-lg">↓</span>
+                        </motion.div>
                     </div>
 
                     {/* Media */}
-                    <div className="lg:col-span-4 flex flex-col gap-8 items-center">
+                    <div className="lg:col-span-3 flex flex-col gap-8 items-center justify-center">
                         {slide.image ? (
                             <MediaDisplay image={slide.image} label={slide.title} />
                         ) : (
@@ -256,11 +275,11 @@ function CTASlide({ slide, index }) {
     const accent = accentPool[index % accentPool.length];
 
     return (
-        <div className="slide-full bg-slate-50 flex items-center justify-center min-h-screen w-full relative">
+        <div className="slide-full bg-white h-screen w-full relative overflow-hidden flex flex-col">
             <BackgroundMagic accent={accent} />
-            <div className="container grid lg:grid-cols-2 gap-20 items-center relative z-10 mx-auto px-12">
+            <div className="container relative z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-20 mx-auto px-6 md:px-12 pt-24 pb-12 h-full overflow-hidden">
                 <motion.div
-                    className="flex justify-center"
+                    className="flex justify-center w-full lg:w-1/3"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                 >
@@ -270,6 +289,7 @@ function CTASlide({ slide, index }) {
                 </motion.div>
 
                 <motion.div
+                    className="w-full lg:w-2/3 h-full overflow-y-auto pr-6 custom-scrollbar scroll-smooth"
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
@@ -285,7 +305,23 @@ function CTASlide({ slide, index }) {
                         {slide.points?.map((pt, i) => (
                             <BulletPoint key={i} text={pt} index={i} accentColor={accent} />
                         ))}
+                        {slide.paragraphs?.map((p, i) => (
+                            <motion.p key={i} className="text-slate-600 font-body text-base italic liquid-glass p-5 border-none" variants={fadeUp}>
+                                {p}
+                            </motion.p>
+                        ))}
                     </div>
+
+                    {/* Scroll hint */}
+                    <motion.div
+                        className="mb-8 flex items-center justify-center gap-2 text-slate-400 text-sm animate-bounce opacity-50"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.5 }}
+                        transition={{ delay: 2 }}
+                    >
+                        <span>Scroll for more content</span>
+                        <span className="text-lg">↓</span>
+                    </motion.div>
 
                     <div className="flex flex-wrap gap-6">
                         <button className="liquid-btn primary text-2xl px-12 py-6">✨ GET STARTED NOW</button>

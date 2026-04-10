@@ -4,6 +4,29 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Bubblegum+Sans&family=Inter:wght@400;600;700;800&display=swap");
 
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    border: transparent;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
 /* ══════════════════════════════════════════
    ADVANCED DESIGN TOKENS
 ══════════════════════════════════════════ */
