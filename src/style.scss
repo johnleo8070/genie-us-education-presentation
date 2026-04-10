@@ -223,14 +223,37 @@ body {
 }
 
 .nav-arrow {
-  @apply fixed top-1/2 -translate-y-1/2 z-[200] w-14 h-14 flex items-center justify-center rounded-full border-white/60 transition-all;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
+  @apply fixed top-1/2 -translate-y-1/2 z-[300] w-14 h-14 flex items-center justify-center rounded-full transition-all;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 2px solid var(--panda-orange);
+  color: var(--panda-orange);
+  box-shadow: 0 10px 25px rgba(249, 115, 22, 0.2);
+
+  &.left {
+    @apply left-6;
+  }
+
+  &.right {
+    @apply right-6;
+  }
 
   &:hover {
-    @apply scale-110 bg-white/80 shadow-2xl;
-    color: var(--panda-orange);
+    @apply scale-110 shadow-2xl;
+    background: var(--panda-orange);
+    color: white;
+  }
+
+  @media (max-width: 1024px) {
+    @apply w-12 h-12;
+
+    &.left {
+      @apply left-2;
+    }
+
+    &.right {
+      @apply right-2;
+    }
   }
 }
 

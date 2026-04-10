@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { slides } from "./data";
 import SlideRenderer from "./components/SlideRenderer.jsx";
 import "./style.scss";
@@ -107,12 +108,16 @@ export default function App() {
       </AnimatePresence>
 
       {/* Nav Arrows */}
-      <div className="hidden lg:block">
+      <div className="z-[300]">
         {!(currentIndex === 0) && (
-          <button onClick={goPrev} className="nav-arrow left" aria-label="Previous">‹</button>
+          <button onClick={goPrev} className="nav-arrow left" aria-label="Previous">
+            <ChevronLeft size={32} strokeWidth={3} />
+          </button>
         )}
         {!(currentIndex === slides.length - 1) && (
-          <button onClick={goNext} className="nav-arrow right" aria-label="Next">›</button>
+          <button onClick={goNext} className="nav-arrow right" aria-label="Next">
+            <ChevronRight size={32} strokeWidth={3} />
+          </button>
         )}
       </div>
 

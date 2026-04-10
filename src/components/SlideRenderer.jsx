@@ -55,13 +55,13 @@ function MediaDisplay({ image, label }) {
     if (image) {
         return (
             <motion.div
-                className="relative group p-4 liquid-glass"
+                className="relative group w-full"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
             >
-                <div className="absolute -inset-4 bg-gradient-to-tr from-orange-400 to-amber-300 rounded-[40px] opacity-20 blur-2xl group-hover:opacity-40 transition-opacity" />
-                <img src={image} alt={label} className="relative z-10 w-full rounded-[24px] shadow-2xl border-4 border-white/50" />
+                <div className="absolute -inset-6 bg-gradient-to-tr from-orange-400 to-amber-300 rounded-[40px] opacity-20 blur-3xl group-hover:opacity-50 transition-opacity" />
+                <img src={image} alt={label} className="relative z-10 w-full rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] border-4 border-white/60 transform group-hover:scale-[1.02] transition-transform duration-500" />
             </motion.div>
         );
     }
@@ -187,47 +187,55 @@ function StandardSlide({ slide, index }) {
 
                 <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 flex-grow overflow-hidden">
                     {/* Content Area - Scrollable */}
-                    <div className="lg:col-span-9 xl:col-span-9 h-full overflow-y-auto pr-6 custom-scrollbar scroll-smooth">
-                        {slide.paragraphs ? (
-                            <motion.div className="space-y-6 max-w-4xl" variants={staggerContainer} initial="hidden" animate="show">
-                                {slide.paragraphs.map((p, i) => (
-                                    <motion.p key={i} className="text-slate-600 font-body text-base md:text-lg leading-relaxed liquid-glass p-6 border-none italic" variants={fadeUp}>
-                                        {p}
-                                    </motion.p>
-                                ))}
-                            </motion.div>
-                        ) : slide.sections ? (
-                            <motion.div className="grid md:grid-cols-2 xl:grid-cols-2 gap-6" variants={staggerContainer} initial="hidden" animate="show">
-                                {slide.sections.map((sec, i) => (
-                                    <SectionCard key={i} section={sec} accentColor={accent} />
-                                ))}
-                            </motion.div>
-                        ) : slide.content ? (
-                            <motion.div className="grid md:grid-cols-2 gap-8" variants={staggerContainer} initial="hidden" animate="show">
-                                {slide.content.map((group, i) => (
-                                    <motion.div key={i} className="liquid-glass p-8 group hover:bg-white/50 transition-all border-none" variants={fadeUp}>
-                                        <h3 className="font-cartoon text-2xl mb-6 flex items-center gap-3" style={{ color: accent }}>
-                                            <span className="w-1.5 h-8 rounded-full" style={{ backgroundColor: accent }} />
-                                            {group.title}
-                                        </h3>
-                                        <div className="space-y-4">
-                                            {group.items.map((item, j) => (
-                                                <div key={j} className="flex gap-4 items-start">
-                                                    <span className="text-xl shrink-0" style={{ color: accent }}>✔</span>
-                                                    <p className="text-slate-600 font-body text-sm md:text-base leading-relaxed">{item}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </motion.div>
-                        ) : (
-                            <motion.div className="grid md:grid-cols-2 gap-4" variants={staggerContainer} initial="hidden" animate="show">
-                                {slide.points?.map((pt, i) => (
-                                    <BulletPoint key={i} text={pt} index={i} accentColor={accent} />
-                                ))}
-                            </motion.div>
-                        )}
+                    <div className="lg:col-span-8 xl:col-span-8 h-full overflow-y-auto pr-6 custom-scrollbar scroll-smooth">
+                        <motion.div className="space-y-10" variants={staggerContainer} initial="hidden" animate="show">
+                            {slide.paragraphs && (
+                                <div className="space-y-6 max-w-4xl">
+                                    {slide.paragraphs.map((p, i) => (
+                                        <motion.p key={i} className="text-slate-600 font-body text-base md:text-lg leading-relaxed liquid-glass p-6 border-none italic" variants={fadeUp}>
+                                            {p}
+                                        </motion.p>
+                                    ))}
+                                </div>
+                            )}
+
+                            {slide.sections && (
+                                <motion.div className="grid md:grid-cols-2 xl:grid-cols-2 gap-6" variants={staggerContainer} initial="hidden" animate="show">
+                                    {slide.sections.map((sec, i) => (
+                                        <SectionCard key={i} section={sec} accentColor={accent} />
+                                    ))}
+                                </motion.div>
+                            )}
+
+                            {slide.content && (
+                                <motion.div className="grid md:grid-cols-2 gap-8" variants={staggerContainer} initial="hidden" animate="show">
+                                    {slide.content.map((group, i) => (
+                                        <motion.div key={i} className="liquid-glass p-8 group hover:bg-white/50 transition-all border-none" variants={fadeUp}>
+                                            <h3 className="font-cartoon text-2xl mb-6 flex items-center gap-3" style={{ color: accent }}>
+                                                <span className="w-1.5 h-8 rounded-full" style={{ backgroundColor: accent }} />
+                                                {group.title}
+                                            </h3>
+                                            <div className="space-y-4">
+                                                {group.items.map((item, j) => (
+                                                    <div key={j} className="flex gap-4 items-start">
+                                                        <span className="text-xl shrink-0" style={{ color: accent }}>✔</span>
+                                                        <p className="text-slate-600 font-body text-sm md:text-base leading-relaxed">{item}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </motion.div>
+                            )}
+
+                            {slide.points && (
+                                <motion.div className="grid md:grid-cols-2 gap-4" variants={staggerContainer} initial="hidden" animate="show">
+                                    {slide.points.map((pt, i) => (
+                                        <BulletPoint key={i} text={pt} index={i} accentColor={accent} />
+                                    ))}
+                                </motion.div>
+                            )}
+                        </motion.div>
 
                         {slide.milestones && (
                             <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-12" variants={staggerContainer} initial="hidden" animate="show">
@@ -254,7 +262,7 @@ function StandardSlide({ slide, index }) {
                     </div>
 
                     {/* Media */}
-                    <div className="lg:col-span-3 flex flex-col gap-8 items-center justify-center">
+                    <div className="lg:col-span-4 flex flex-col gap-8 items-center justify-center">
                         {slide.image ? (
                             <MediaDisplay image={slide.image} label={slide.title} />
                         ) : (
@@ -279,17 +287,22 @@ function CTASlide({ slide, index }) {
             <BackgroundMagic accent={accent} />
             <div className="container relative z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-20 mx-auto px-6 md:px-12 pt-24 pb-12 h-full overflow-hidden">
                 <motion.div
-                    className="flex justify-center w-full lg:w-1/3"
+                    className="flex flex-col gap-6 justify-center items-center w-full lg:w-2/5 h-full overflow-y-auto pt-10"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                 >
-                    <div className="relative">
+                    {slide.image ? (
+                        <div className="w-full">
+                            <MediaDisplay image={slide.image} label={slide.title} />
+                        </div>
+                    ) : (
                         <PandaPanel message={slide.pandaMessage} accentColor={accent} large />
-                    </div>
+                    )}
+                    {slide.image && <PandaPanel message={slide.pandaMessage} accentColor={accent} />}
                 </motion.div>
 
                 <motion.div
-                    className="w-full lg:w-2/3 h-full overflow-y-auto pr-6 custom-scrollbar scroll-smooth"
+                    className="w-full lg:w-3/5 h-full overflow-y-auto pr-6 custom-scrollbar scroll-smooth pt-10"
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
