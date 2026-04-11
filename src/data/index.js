@@ -7,7 +7,7 @@ export const slides = [
     subtitle: "Transforming Early Childhood Learning Through Play",
     tag: "Presented by GSTAT MOBILE SOLUTIONS",
     pandaMessage: "Welcome to the future of learning! 🎓",
-    image: "",
+    image: "/images/slide 1.jpeg",
     bgColor: "#1a0a4e",
     accentColor: "#FFD700",
   },
@@ -38,7 +38,8 @@ export const slides = [
       "Traditional learning methods for young children often lack engagement and interactivity, making it difficult for children to stay focused. Many educational systems rely heavily on repetition and passive learning, which can lead to boredom and reduced interest in education at an early age.",
       "In addition, many parents struggle to find effective tools that combine both learning and entertainment. While there are numerous educational apps available, many of them fail to strike the right balance between fun and structured learning, leaving gaps in a child’s development.",
       "Another key challenge is the lack of tools that allow parents to actively monitor and support their child’s learning journey. Without clear insights into progress and performance, parents often find it difficult to guide their children effectively.",
-      "Many primary schools in Nigeria and across Africa face specific institutional challenges like limited access to modern digital tools, outdated teaching methods, and inadequate infrastructure. Most existing platforms are generic and not customized for individual schools or African curriculums."
+      "Many primary schools in Nigeria and across Africa face specific institutional challenges like limited access to modern digital tools, outdated teaching methods, and inadequate infrastructure. ",
+      "Most existing platforms are generic and not customized for individual schools or African curriculums."
     ],
     sections: [
       {

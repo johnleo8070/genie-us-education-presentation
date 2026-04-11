@@ -194,7 +194,7 @@ function TitleSlide({ slide }) {
                             />
                         ) : (
                             <div className="flex flex-col items-center gap-10">
-                                
+
                                 <PandaPanel message={slide.pandaMessage} accentColor="var(--panda-orange)" large />
                             </div>
                         )}
