@@ -90,9 +90,9 @@ export default function App() {
   return (
     <div className="presentation-shell bg-[#fcfdff] w-screen h-screen overflow-hidden relative selection:bg-orange-100">
       {/* Top Bar Logo & Counter */}
-      <div className="fixed top-6 left-8 z-[9999] flex items-center gap-3 liquid-glass px-5 py-2.5 border-white/40 pointer-events-auto">
-        <img src="/professor-panda.png" alt="Panda" className="w-12 h-12 object-contain drop-shadow-md" />
-        <span className="liquid-text text-2xl">GENIE-US</span>
+      <div className="fixed top-6 left-8 z-[9999] flex items-center gap-4 liquid-glass px-6 py-3 border-white/40 pointer-events-auto">
+        <img src="/professor-panda.png" alt="Panda" className="w-16 h-16 object-contain drop-shadow-md" />
+        <span className="liquid-text text-3xl">GENIE-US</span>
       </div>
 
       <div className="fixed top-6 right-8 z-[9999] liquid-glass px-5 py-3 border-white/40 font-cartoon text-slate-500">

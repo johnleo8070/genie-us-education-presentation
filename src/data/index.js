@@ -7,7 +7,7 @@ export const slides = [
     subtitle: "Transforming Early Childhood Learning Through Play",
     tag: "Presented by GSTAT MOBILE SOLUTIONS",
     pandaMessage: "Welcome to the future of learning! 🎓",
-    image: "/images/slide 1.jpeg",
+    image: "",
     bgColor: "#1a0a4e",
     accentColor: "#FFD700",
   },

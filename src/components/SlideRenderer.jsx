@@ -194,7 +194,15 @@ function TitleSlide({ slide }) {
                             />
                         ) : (
                             <div className="flex flex-col items-center gap-10">
-
+                                <motion.div
+                                    className="flex items-center gap-4 liquid-glass px-8 py-4 mb-4"
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.2 }}
+                                >
+                                    <img src="/professor-panda.png" alt="Logo" className="w-14 h-14 object-contain" />
+                                    <span className="liquid-text text-4xl">GENIE-US</span>
+                                </motion.div>
                                 <PandaPanel message={slide.pandaMessage} accentColor="var(--panda-orange)" large />
                             </div>
                         )}
