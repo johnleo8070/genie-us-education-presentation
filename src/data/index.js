@@ -976,7 +976,8 @@ export const slides = [
         title: "� Institutional Partnerships",
         items: [
           "Partnering with schools for bulk onboarding and classroom integration.",
-          "Credibility through association with established educators."
+          "Credibility through association with established educators.",
+          "Establish strategic relationships with educational boards, government ministries and parastatals, NGOs, orphanages, and other relevant institutions to expand partnerships and create greater impact."
         ]
       },
       {
